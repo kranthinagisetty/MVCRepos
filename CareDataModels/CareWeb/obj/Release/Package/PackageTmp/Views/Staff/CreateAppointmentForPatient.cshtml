@@ -1,0 +1,79 @@
+﻿@model CareDataModels.Models.Appointment
+
+@{
+    ViewBag.Title = "Create Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+<div>
+    @Html.Partial("AppointmentsListMenu")
+</div>
+}
+
+
+
+
+
+
+<div id="navigationBar">
+    <a href="@Url.Action("DoctorsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+    <a href="@Url.Action("AppointmentsList", "Staff")" title="Home" style="text-decoration:none"> Appointments ></a>
+    Create Appointments
+</div>
+
+
+<div id="contentpane">
+    <div class="currentpagetitlebox">
+        Create Appointments
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <table>
+            <tr>
+                <td>
+                    <div class="infolabel">
+                        @Html.LabelFor(model => model.DoctorId, "Doctor's Name")
+                    </div>
+                    <div class="infofield">
+                        @Html.DropDownList("DoctorID", String.Empty)
+                        @Html.ValidationMessageFor(model => model.DoctorId)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="infolabel">
+                        @Html.LabelFor(model => model.AppointmentDate, "Appointment Time")
+                    </div>
+                    <div class="infofield">
+                        @Html.EditorFor(model => model.AppointmentDate)
+                        @Html.ValidationMessageFor(model => model.AppointmentDate)
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+        <p>
+            <input class="editbutton" type="submit" value="Add" />
+        </p>
+    }
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#AppointmentDate").datetimepicker({
+                beforeShow: function (textbox, instance) {
+                    instance.dpDiv.css({ marginTop: (-textbox.offsetHeight) + 'px', marginLeft: textbox.offsetWidth + 'px' })
+                },
+                dateFormat: 'dd/M/yy', timeFormat: 'hh:mm tt'
+            });
+        });
+    </script>
+}
+
+

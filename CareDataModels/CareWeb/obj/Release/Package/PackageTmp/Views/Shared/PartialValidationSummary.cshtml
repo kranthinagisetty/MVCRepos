@@ -1,0 +1,17 @@
+﻿<div id="Result">
+
+    @Html.ValidationSummary(false, "", new { style = "font: 12px 'Source Sans Pro', sans-serif;color:Red;" })
+    @*<span style="font: 12px 'Source Sans Pro', sans-serif;color:Red;" id="spanError"></span>*@
+
+</div>
+
+@section Scripts
+{
+<script type="text/javascript">
+    function animate() {
+       
+        $("#Result").slideToggle("slow");
+    }
+
+</script>
+ }

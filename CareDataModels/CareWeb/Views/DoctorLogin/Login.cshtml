@@ -1,0 +1,46 @@
+﻿@model CareWeb.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("BasicMenuView")
+</div>
+<div id="contentpane">
+    @using (Html.BeginForm(new { ReturnUrl = Request.QueryString["ReturnUrl"] }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="Container">
+            <div class="login">
+                <div class="contenttitletext">Doctor Login</div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="ui-button-text-only">
+                                @Html.TextBoxFor(m => m.UserName, new { placeholder = "User Name" })
+                            </div>
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </td>
+                    </tr>
+                </table>
+
+                <p class="submit">
+                    <input class="loginbutton" type="submit" value="Login" />
+                </p>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@model CareDataModels.Models.Prescription
+
+@{
+    ViewBag.Title = "Upload Prescription";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("StaffMenuView")
+</div>
+
+<div id="contentpane">
+    <div class="currentpagetitlebox">
+        UPLOAD PRESCRIPTION:
+    </div>
+
+    @using (Html.BeginForm("AddPrescription", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    <div class="infolabel">
+                        @Html.LabelFor(model => model.DoctorId, "Doctor's Name")
+                    </div>
+                    <div class="infofield">
+                        @Html.DropDownList("DoctorID", String.Empty)
+                        @Html.ValidationMessageFor(model => model.DoctorId)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="file" name="file" id="file" class="prescriptionuploadcontrol"/>
+                </td>
+            </tr>
+        </table>
+        <input class="textboxrowbutton" type="submit" name="submitButton" value="Upload" style="margin-top:30px;" />
+    }
+
+</div>

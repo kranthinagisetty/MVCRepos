@@ -1,0 +1,38 @@
+﻿<div class="admin_section">
+    <h6 class="admin_name">
+        WELCOME
+        <span>
+            @ViewData["FullName"]
+        </span>
+    </h6>
+    <ul class="admin_menu">
+        @*<li>  <a href="~/Admin/AdminHome" hidden="hidden" title="Home">HOME</a></li>
+       
+        <li>  <a href="~/Admin/CreateHospital" hidden="hidden" title="Add Admin">ADD HOSPITAL</a></li>
+        <li> <a href="~/Admin/AdminsList" title="hidden">ADMINS</a></li>
+       <li>  <a href="~/Admin/Create" hidden="hidden" title="Admins">ADD ADMIN</a></li>*@
+
+        <li><a id="HOSPITALS" href="@Url.Action("HospitalsList", "Admin", new { MenuClassID = "HOSPITALS" })" title="Videos">HOSPITALS</a></li>
+        <li><a id="Settings" href="@Url.Action("Changepassword", "Admin", new { MenuClassID = "Settings" })" title="Staff">Settings</a></li>
+
+    </ul>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var sURL = window.document.URL.toString();
+        if (sURL.indexOf("?") > 0) {
+            var arrParams = sURL.split("?");
+            var arrParams1 = sURL.split("=");
+            $('#' + arrParams1[1]).addClass('current');
+        }
+        else {
+            $('#HOSPITALS').addClass('current');            
+        }
+    });
+
+
+</script>

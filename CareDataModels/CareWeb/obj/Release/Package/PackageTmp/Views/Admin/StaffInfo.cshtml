@@ -1,0 +1,52 @@
+﻿@model CareDataModels.Models.Staff
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Staff Info";
+}
+@section leftMenu
+{
+<div>@Html.Partial("AdminMenu")</div>
+}
+
+
+
+<div class="banner_section"><img src="~/Images/banner_img1.jpg" alt="" /></div>
+<div class="page_direction">
+    <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+    <a href="@Url.Action("StaffList", "Admin")" title="Home" style="text-decoration:none"> Staffs ></a>
+    @Html.DisplayFor(model => model.FullName)
+</div>
+<div class="content_wrapper fancy_fields">
+    <div class="row doctor_details_con">
+        <div class="col col_left">
+            <h2>@Html.DisplayFor(model => model.FullName)</h2>
+            <ul>
+                <li class="txt_blue">@*@Html.DisplayNameFor(model => model.Hospital.Name)*@Hospital Name:  @Html.DisplayFor(model => model.Hospital.Name)</li>
+                <li>@Html.DisplayNameFor(model => model.Password):  @Html.Label("******")</li>
+                <li>@Html.DisplayNameFor(model => model.Gender): @Html.DisplayFor(model => model.Gender)</li>
+                <li>@Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(model => model.Email)</li>
+                <li>@Html.DisplayNameFor(model => model.Phone): @Html.DisplayFor(model => model.Phone)</li>
+                <li>Country:@Html.Label("India")</li>
+                <li>@Html.DisplayNameFor(model => model.State):@Html.DisplayFor(model => model.State)</li>
+                <li>@Html.DisplayNameFor(model => model.City):@Html.DisplayFor(model => model.City)</li>
+                <li>@Html.LabelFor(model => model.ZipCode, "Zip Code"): @Html.DisplayFor(model => model.ZipCode)</li>
+            </ul>
+            <hr>
+            <h3>@Html.LabelFor(model => model.AddressLine1, "Address"):</h3>
+            <p>
+                @Html.DisplayFor(model => model.AddressLine1)
+            </p>
+        </div>
+      
+    </div>
+    <div class="row">
+        <input  type="button" value="Edit" onclick="location.href='@Url.Action("EditStaff", "Admin", new { id = Model.StaffID })'" />
+    </div>
+
+
+</div>
+

@@ -1,0 +1,40 @@
+﻿<div class="admin_section">
+    <h6 class="admin_name">
+        WELCOME
+        <span>
+            @ViewData["FullName"]
+        </span>
+    </h6>
+    <ul class="admin_menu">
+
+        <li><a id="APPOINTMENTS" href="@Url.Action("AppointmentsList", "Staff", new { MenuClassID = "APPOINTMENTS" })" title="Staff">APPOINTMENTS</a></li>
+        <li><a id="PATIENT" href="@Url.Action("PatientsList", "Staff", new { MenuClassID = "PATIENT" })" title="Staff">PATIENT</a></li>
+        <li><a id="PICTURES" href="@Url.Action("VideosList", "Staff", new { MenuClassID = "PICTURES" })" title="Videos">PICTURES & VIDEOS</a></li>
+        <li><a id="Settings" href="@Url.Action("StaffChangePassword", "Staff", new { MenuClassID = "Settings" })" title="Staff">Settings</a></li>
+
+
+        @*<li> <a href="~/Staff/StaffHome" hidden="hidden" title="Home" class="current" >HOME</a></li>*@
+        @*<li> <a href="~/Staff/DoctorsList" hidden="hidden" title="Doctors">DOCTOR</a></li>*@
+       
+    </ul>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var sURL = window.document.URL.toString();
+        if (sURL.indexOf("?") > 0) {
+            var arrParams = sURL.split("?");
+            var arrParams1 = sURL.split("=");
+            $('#' + arrParams1[1]).addClass('current');
+        }
+        else
+        {
+            $('#APPOINTMENTS').addClass('current');            
+        }
+    });
+
+
+</script>

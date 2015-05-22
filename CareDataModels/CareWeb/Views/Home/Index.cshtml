@@ -1,0 +1,67 @@
+﻿@model CareWeb.Models.Login
+@{
+    ViewBag.Title = "Home";
+   // Layout = "~/Views/Shared/_InitLayout.cshtml";
+}
+@*@section leftMenu
+{
+<div>
+    @Html.Partial("BasicMenuView")
+</div>
+    }*@
+@*<div id="contentpane">
+    <div id="bodyheadertext">
+        @*<h2>Welcome to DeNTsPLy!</h2> 
+    </div>
+</div>*@*
+
+
+
+<div id="contentpane"  >
+    @using (Html.BeginForm(new { ReturnUrl = Request.QueryString["ReturnUrl"] }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="Container" style="background-image: url(Images/login_bg.png); height:100%;width:100%">
+        <div>
+            <table style="padding-top: 90px; margin:0 auto">
+                <tr>
+                    <td style="text-align: center">
+
+                        <table width="322" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="background-image: url(/Images/HealthCareApplogo.png)">
+                                    <img src="~/Images/HealthCareApplogo.png" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                      
+                                    <br />
+                                    <label>User ID</label><br />
+
+                                    <br />
+                                    <br />
+                                    <label>Password</label><br />
+                                    <br />
+                                    <br />
+                                    <p class="submit">
+                                        <input class="loginbutton" type="submit" value="Login" />
+                                    </p>
+                                    <br />
+                                    <br /> 
+                                </td>
+                            </tr>
+                            <tr> 
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+        <div class="validationsummary" >
+            @Html.ValidationSummary(true)
+        </div>
+    }
+</div>

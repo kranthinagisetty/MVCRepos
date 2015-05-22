@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CareDataModels.Models.Appointment>
+
+@{
+    ViewBag.Title = "Today's Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+<div>
+    @Html.Partial("AppointmentsListMenu")
+</div>
+
+    }
+<div id="navigationBar">
+    <a href="@Url.Action("DoctorsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+    TodaysAppointments
+</div>
+<div>
+    <div class="smallgraytext_New">
+        Todays Appointments
+    </div>
+
+    <div id="appmenu">
+        <div id="applinksmenu" align="left">
+
+            @foreach (var item in Model)
+            {
+              if (item.IsApproved ?? false)
+                {                 
+               
+                <a href="@Url.Action("AppointmentInfo", "Staff", new { id = item.AppointmentId })" title="Appointment Info" style="text-decoration: none; text-align: center;">
+                    <div class="todaysappointments">
+                        @String.Format("{0:hh:mm tt}", item.AppointmentDate)
+                    </div>
+                    <label class="appointmentpatientlabel">Patient</label>
+                    <div class="appointmentpatientname">
+                        @Html.DisplayFor(modelItem => item.Patient.FullName)
+                    </div>
+                    <div class="cancelledbox" align="right" style="bottom:0px;">
+                        @Html.CheckBoxFor(modelItem => item.IsCancelled.Value, new { @onclick = "return;" })
+                    </div>
+                </a>
+                }
+                else
+                {                
+                
+                <a href="@Url.Action("AppointmentInfo", "Staff", new { id = item.AppointmentId })" title="Appointment Info" style="text-decoration: none; text-align: center; color: #000000; background-color: #FFCC66; ">
+                    <div class="todaysappointments">
+                        @String.Format("{0:hh:mm tt}", item.AppointmentDate)
+                    </div>
+                    <label class="appointmentpatientlabel">Patient</label>
+                    <div class="appointmentpatientname">
+                    @Html.DisplayFor(modelItem => item.Patient.FullName)                       
+                    </div>
+                    <div class="cancelledbox" align="right" style="bottom:0px;">
+                        @Html.CheckBoxFor(modelItem => item.IsCancelled.Value, new { @onclick = "return;" })
+                    </div>
+                </a>
+                }
+
+            }
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,87 @@
+﻿@model CareDataModels.Models.Appointment
+
+@{
+    ViewBag.Title = "APPOINTMENTS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+<div>      
+    @Html.Partial("AdminMenu")
+</div>
+ }
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Appointments" style="text-decoration:none"> Appointments ></a>
+        Create Appointments
+    </div>
+</div>
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+        <h2>Create Appointment</h2>
+    </div>
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.AppointmentId)//Used for ScheduleId
+    @Html.HiddenFor(model => model.AddedBy)//Used for Timeslot
+    @Html.HiddenFor(model => model.AppointmentDate)//Used for Timeslot
+                                                                                       
+     
+
+    <div class="row two_col_form_container">
+        <div class="col">
+            @Html.LabelFor(model => model.PatientId, "Patient id")
+            @Html.DropDownList("PatientID")
+            @Html.ValidationMessageFor(model => model.PatientId)
+        </div>
+        <div class="clr"></div>
+        <div class="col">
+            @Html.LabelFor(model => model.DoctorId, "Doctor name")
+            @Html.DropDownList("DoctorID")
+            @Html.ValidationMessageFor(model => model.DoctorId)
+        </div>
+        <div class="clr"></div>
+        <div class="col">
+                @Html.Label("Time")
+                @Html.DisplayFor(model => model.AddedBy)
+                @Html.ValidationMessageFor(model => model.AddedBy)
+        </div>
+
+
+    </div>
+    
+    <div class="row two_col_form_container">
+        <div class="col">
+            <input  type="submit" value="SUBMIT" />
+        </div>
+    </div>
+    
+    }
+</div>
+
+
+
+
+@section Scripts {
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $("#AppointmentDate").datetimepicker({
+    //        beforeShow: function (textbox, instance) {
+    //            instance.dpDiv.css({ marginTop: (-textbox.offsetHeight) + 'px', marginLeft: textbox.offsetWidth + 'px' })
+    //        },
+    //        dateFormat: 'dd/M/yy', timeFormat: 'hh:mm tt'
+    //    });
+    //});
+</script>
+
+}
+
+   
+

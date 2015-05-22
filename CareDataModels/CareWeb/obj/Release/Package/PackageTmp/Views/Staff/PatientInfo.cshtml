@@ -1,0 +1,107 @@
+﻿@model CareDataModels.PatientMedicalRecordsVM.PatientMedicalRecordsVM
+
+@{
+    ViewBag.Title = "Patient Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section leftMenu
+{
+    <div>
+        @*@Html.Partial("PatientsListMenu")*@
+        @Html.Partial("StaffMenuView")
+    </div>
+}
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("PatientsList", "Staff")" title="Patients" style="text-decoration:none"> Patients></a>
+        @Html.DisplayFor(model => model.patient.FirstName)
+    </div>
+</div>
+
+
+<div class="content_wrapper fancy_fields">
+    <div class="row doctor_details_con">
+        <div class="col col_left">
+            <h2>@Html.DisplayFor(model => model.patient.FirstName)</h2>
+            <ul>
+                <li class="txt_blue">@Html.DisplayFor(model => model.patient.Profession)</li>
+                <li>@Html.LabelFor(model => model.patient.Phone, "Mobile"): @Html.DisplayFor(model => model.patient.Phone)</li>
+                <li>@Html.DisplayNameFor(model => model.patient.Email):@Html.DisplayFor(model => model.patient.Email)</li>
+                <li>@Html.LabelFor(model => model.patient.LastName, "Last Name"):@Html.DisplayFor(model => model.patient.LastName)</li>
+                <li>@Html.LabelFor(model => model.patient.Gender):@Html.DisplayFor(model => model.patient.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "Male" }, new SelectListItem { Text = "Female", Value = "Female" } })</li>
+                <li>Country:@Html.Label("India")</li>
+                <li>@Html.DisplayNameFor(model => model.patient.State):@Html.DisplayFor(model => model.patient.State)</li>
+                <li>@Html.DisplayNameFor(model => model.patient.City):@Html.DisplayFor(model => model.patient.City)</li>
+                <li>@Html.LabelFor(model => model.patient.ZipCode, "Zip Code"): @Html.DisplayFor(model => model.patient.ZipCode)</li>
+                <li>@Html.LabelFor(model => model.patient.FullName, "Name"):    @Html.DisplayFor(model => model.patient.FullName)</li>
+            </ul>
+            <hr>
+            <h3>@Html.LabelFor(model => model.patient.AddressLine1, "Address"):</h3>
+            <p>
+                @Html.DisplayFor(model => model.patient.AddressLine1)
+            </p>
+            <div class="DivPatientInfo">
+                @foreach (var item in Model.medicalRecords)
+                {
+                    <hr>
+                    <div class="DivPatientInfoLeft">
+                        <p>
+                            <h3> @Html.Label("Type"):</h3>
+                            @Html.DisplayFor(model => item.ImageExtension)
+                        </p>
+                        <p>
+                            <h3>@Html.LabelFor(model => item.AddedOn, "Date Uploaded"):</h3>
+                            @Html.ValueFor(model => item.AddedOn, "{0:dd-MM-yyyy}")
+                        </p>
+                        <p>
+                            <h3>@Html.Label("Doctor")    :</h3>
+                            @Html.Label(ViewData["doctor"].ToString())
+                        </p>
+                        <p>
+                            <h3>@Html.Label("Details")   :</h3>
+                            @Html.DisplayFor(model => item.MedicalRecordName)
+                        </p>
+                    </div>
+                    <div class="DivPatientInforight">
+                        <p>
+                            <h3>Image    :</h3>
+                            @if (item.MedicalRecordImage != null)
+                            {
+                                if (item.MedicalRecordImage.Length != 0)
+                                {
+                            <img width="100" height="100" src="data:image;base64,@System.Convert.ToBase64String(item.MedicalRecordImage)" /><br />
+                            <label style="color:#4591fb">Click here to View</label>
+                                }
+                            }
+                        </p>
+                    </div>
+                    <div class="clr"></div>
+                }
+
+            </div>
+        </div>
+        <div class="col col_right">
+            <h3>Patients Image:</h3>
+
+
+            <ul class="slot_timmings_list">
+                @if (Model.patient.ImageContent != null)
+                {
+                    <img width="200" height="300" src="data:image;base64,@System.Convert.ToBase64String(Model.patient.ImageContent)" />
+                }
+            </ul>
+
+        </div>
+    </div>
+    <div class="row">
+        <input type="button" value="Edit" onclick="location.href='@Url.Action("EditPatient", "Staff", new { id = Model.patient.PatientID })'" />
+        <input type="button" value="Upload Records" onclick="location.href='@Url.Action("AddMedicalRecords", "Staff", new { id = Model.patient.PatientID })'" />
+    </div>
+
+
+</div>

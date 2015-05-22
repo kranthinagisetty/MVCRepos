@@ -1,0 +1,92 @@
+﻿<div id="dlgUploadVideo" style="background-color:#E5e5e5" title="Upload Picture or Video"> 
+    @using (Html.BeginForm("UploadPictures", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken() 
+        <label style="color:#4591fb">  Video</label><br />
+        @Html.TextBox("VideoURL")    <br />
+    <span class="red" id="spanErrvideo" style="font-size:10px"></span>
+        <br /><label>  OR</label><br /><br />
+   
+
+        <label style="color:#4591fb">  Picture</label><br />   <span class="red" id="spanvideo" style="font-size:10px"></span>
+    <input type="file"  id="videofile" name="PictureUpload" />
+        <br /><br /><br />
+    <input class="textboxrowbutton" id="btnsavevideo" type="submit" value="Save">
+    } 
+</div>
+<div class="overlay"></div>
+<script type="text/javascript"> 
+    $(function () {
+        $("#dlgUploadVideo").dialog({
+            model: true,
+            autoOpen: true,
+            resizable: false,
+            width:400,
+            height: 350,
+            open: function () {
+                $('.overlay').show();
+            }, close: function () {
+                $('.overlay').hide();
+            }
+        });
+
+
+        $("#btnsavevideo").click(function () {
+            $("#spanErrvideo").empty();
+            $("#spanvideo").empty();
+
+            var errorMesurl = "";
+            var errorMesvideo = "";
+
+
+            var txt = $('#VideoURL').val();
+            var re = /(http(s)?:\\)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?/
+            if (re.test(txt)) {
+                //alert('Valid URL')
+            }
+            else {
+                alert("Please Enter Valid URL.");
+                errorMesvideo = "Please Enter Valid URL.";
+                return false;
+            }
+
+            if ($.trim($("#VideoURL").val()).length == 0) {
+
+                errorMesvideo = "Url should not be empty.";
+            }
+            else if ($("#VideoURL").val().trim() == "") {
+                errorMesvideo = "Url should not be empty.";
+            }
+
+            var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
+
+            if ($.trim($("#videofile").val()).length == 0) {
+
+                errorMesurl = "please upload picture.";
+            }
+            else if ($("#videofile").val() == "") {
+                errorMesurl = "please upload picture.";
+            }
+            else if ($('#videofile').val() != '') {
+                var ext = $.inArray($('#videofile').val().split('.').pop().toLowerCase(), fileExtension);
+                if (ext == -1) {
+                    errorMesurl = "Allowed types are jpg, png,gif";
+                    $('#videofile').val("");
+                }
+            }
+
+            if (errorMesurl.length != 0 && errorMesvideo.length != 0) {
+
+                $("#spanErrvideo").append(errorMesvideo);
+                $("#spanvideo").append(errorMesurl);
+
+                return false;
+            }
+            else {
+
+                return true;
+            }
+        });
+
+    })    
+</script>

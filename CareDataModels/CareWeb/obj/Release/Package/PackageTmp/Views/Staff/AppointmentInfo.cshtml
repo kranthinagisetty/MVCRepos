@@ -1,0 +1,88 @@
+﻿@model CareDataModels.Models.Appointment
+
+@{
+    ViewBag.Title = "Appointment Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section leftMenu
+{
+<div>
+    @Html.Partial("AppointmentsListMenu")
+</div>
+    }
+<div id="navigationBar">
+    <a href="@Url.Action("DoctorsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+    <a href="@Url.Action("AppointmentsList", "Staff")" title="Appointments" style="text-decoration:none"> Appointments></a>
+    AppointmentInfo
+</div>
+<div>
+    <div class="smallgraytext_New">
+        Appointment Info
+    </div>
+    <table>
+        <tr>
+            <td>
+                <div class="infolabel">                    
+                    @Html.LabelFor(model => model.Doctor.FullName, "Doctor's Name")
+                </div>
+                <div class="infofield">
+                    @Html.DisplayFor(model => model.Doctor.FullName)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="infolabel">
+                    @Html.LabelFor(model => model.Patient.FullName, "Patient's Name")
+                </div>
+                <div class="infofield">
+                    @Html.DisplayFor(model => model.Patient.FullName)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="infolabel">
+                    @Html.LabelFor(model => model.AppointmentDate, "Appointment Time")
+                </div>
+                <div class="infofield">
+                    @String.Format("{0: dd/MMM/yyyy hh:mm tt}", Model.AppointmentDate)
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="infolabel">
+                    @Html.LabelFor(model => model.IsApproved, "Approved")
+                </div>
+                <div class="infofield">
+                    @Html.DisplayFor(model => model.IsApproved)
+                </div>
+                @if (!(Model.IsApproved ?? false))
+                {
+                    <input class="textboxrowbutton" type="button" value="Approve" onclick="location.href='@Url.Action("ApproveAppointment", "Staff", new { id = Model.AppointmentId })'" />
+                }
+            </td>           
+        </tr>
+        <tr>
+            <td>
+                <div class="infolabel">
+                    @Html.LabelFor(model => model.IsCancelled, "Cancelled")
+                </div>
+                <div class="infofield">
+                    @Html.DisplayFor(model => model.IsCancelled)
+                </div>
+                @if (!(Model.IsCancelled ?? false))
+                {
+                    <input class="textboxrowbutton" type="button" value="Cancel" onclick="location.href='@Url.Action("CancelAppointment", "Staff", new { id = Model.AppointmentId })'" />
+                }
+            </td>
+           
+        </tr>
+    </table>
+    
+    <input class="editbutton" type="button" value="Edit" onclick="location.href='@Url.Action("EditAppointment", "Staff", new { id = Model.AppointmentId })'" /> 
+
+    </div>

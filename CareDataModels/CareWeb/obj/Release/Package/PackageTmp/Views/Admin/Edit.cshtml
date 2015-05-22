@@ -1,0 +1,208 @@
+﻿@model CareDataModels.Models.Admin
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Edit Admin";
+}
+@section leftMenu
+{
+<div>
+    @Html.Partial("SuperAdminMenu")
+</div>
+    }
+
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("HospitalsList", "Admin")" title="Hospitals" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("AdminsList", "Admin")" title="Admins" style="text-decoration:none"> Admins ></a>
+        <a href="@Url.Action("Info", "Admin", new { id = Model.AdminID })" title="AdminInfo" style="text-decoration:none"> AdminInfo ></a>
+        EditAdmin
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+        <h2> Edit Admin</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @*@Html.ValidationSummary(true)*@
+        @Html.HiddenFor(model => model.AdminID)
+        @Html.Partial("PartialValidationSummary")
+        
+            <div class="row two_col_form_container">
+
+                <div class="col">
+                    @Html.LabelFor(model => model.HospitalID, "Hospital")
+                    @Html.DropDownList("HospitalID", String.Empty)
+                    @*@Html.ValidationMessageFor(model => model.HospitalID)*@
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.FirstName)
+                    @Html.EditorFor(model => model.FirstName)
+                    @*@Html.ValidationMessageFor(model => model.FirstName)*@
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.LastName)
+                    @Html.EditorFor(model => model.LastName)
+                    @*@Html.ValidationMessageFor(model => model.LastName)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.Password)
+                    @Html.PasswordFor(model => model.Password)
+                    @*@Html.ValidationMessageFor(model => model.Password)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.Phone)
+                    @Html.EditorFor(model => model.Phone)
+                    @*@Html.ValidationMessageFor(model => model.Phone)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.Email)
+                    @Html.EditorFor(model => model.Email)
+
+                </div>
+
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.AddressLine1, "Address")
+                    @Html.TextAreaFor(model => model.AddressLine1, new { @class = "multilineTextArea" })
+                    @*@Html.ValidationMessageFor(model => model.AddressLine1)*@
+                </div>
+
+                <div class="col">
+                    <span>&nbsp;&nbsp;</span>   @Html.LabelFor(model => model.Gender)
+                    @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "Male" }, new SelectListItem { Text = "Female", Value = "Female" } })
+                    @*@Html.ValidationMessageFor(model => model.Gender)*@
+                </div>
+
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("Country")
+                    @Html.DropDownListFor(model => model.AddressLine2, (IEnumerable<SelectListItem>)ViewBag.Country, "--Choose Your Country--", new { @id = "ddlCountry", @onchange = "javascript:GetStates(this.value);" })
+
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("State")
+                    @Html.DropDownList("State", (List<SelectListItem>)ViewBag.States, "--Choose Your State--", new { @id = "ddlstate", @onchange = "javascript:GetCities(this.value);" })
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("City")
+                    @Html.DropDownList("City", (IEnumerable<SelectListItem>)ViewBag.Cities, "--Choose Your City--", new { @id = "ddlCity" })
+
+                </div>
+
+
+                <div class="clr"></div>
+                <div class="col">
+                    <input  type="submit" value="Submit" />
+                </div>
+
+            </div>
+
+            <div id="divLoading">
+                <p style="position: absolute; top: 30%; left: 45%; color: White;">
+                    Loading, please wait...
+                    <img src="~/Images/ajax-load.gif" width="50px" height="50px" />
+                </p>
+            </div>
+
+        }
+
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+    function GetStates(_Id) {
+
+        var procemessage = "<option value='0'> Please wait...</option>";
+        var ddlStates = $("#ddlstate");
+
+        $("#ddlcity").html(procemessage).show();
+
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetStates", "Staff")',
+                data: { "id": _Id },
+                success: function (data) {
+
+                    ddlStates.html('');
+
+                    $.each(data, function (id, option) {
+
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+
+        }
+
+
+        function GetCities(_Id) {
+
+            var procemessage = "<option value='0'> Please wait...</option>";
+            var ddlcity = $("#ddlCity");
+
+            $("#ddlcity").html(procemessage).show();
+
+
+            $.ajax({
+                cache: false,
+                type: "GET", 
+                url: '@Url.Action("GetCities", "Staff")',
+                data: { "id": _Id },
+                success: function (data) {
+                    ddlcity.html('');
+
+                    $.each(data, function (id, option) {
+
+                        ddlcity.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+
+        }
+
+
+    </script>
+}
+
+
+
+
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

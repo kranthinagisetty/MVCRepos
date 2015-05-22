@@ -1,0 +1,93 @@
+﻿@model CareDataModels.Models.Hospital
+
+@{
+    ViewBag.Title = "Hospital Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+    <div>
+        @Html.Partial("SuperAdminMenu")
+    </div>
+}
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("HospitalsList", "Admin")" title="Hospitals" style="text-decoration:none"> Home ></a>        
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row doctor_details_con">
+
+        <div class="col col_left">
+            <h2> @Html.DisplayFor(model => model.Name)</h2>
+            <ul>
+                <li class="txt_blue"> @Html.LabelFor(model => model.Name, "Hospital Name"): @Html.DisplayFor(model => model.Name)</li>
+                <li>Country:@Html.Label("India")</li>
+                <li>@Html.DisplayNameFor(model => model.State): @Html.DisplayFor(model => model.State)</li>
+                <li>@Html.DisplayNameFor(model => model.City):@Html.DisplayFor(model => model.City)</li>
+                <li>@Html.LabelFor(model => model.ZipCode, "Zip Code"): @Html.DisplayFor(model => model.ZipCode)</li>
+            </ul>
+            <hr>
+            <h3>@Html.LabelFor(model => model.AddressLine1, "Address") :</h3>
+            <p>
+                @Html.DisplayFor(model => model.AddressLine1)
+            </p>
+
+            <input type="button" value="Edit Details" onclick="location.href='@Url.Action("EditHospital", "Admin", new { id = Model.HospitalId })'" /><br /><br />
+
+
+
+        </div>
+
+        <div class="col col_rightHospitals">
+            <h3>Hospital Image:</h3>
+
+
+            <ul class="slot_timmings_list">
+                @if (Model.ImageContent != null)
+                {
+                    <img width="200" height="300" src="data:image;base64,@System.Convert.ToBase64String(Model.ImageContent)" />
+                }
+            </ul>
+
+        </div>
+
+       <div class="clr"></div>
+
+        <div style="padding-top:30px">
+            <div class="col f_right">
+                <input type="button" value="ADD ADMIN" onclick="location.href='@Url.Action("Create", "Admin")'" />
+            </div>
+            <div class="doc_grid_con">
+
+                <div class="row hr_row">
+                    <div class="col">Name</div>
+                    <div class="col">Mobile</div>
+                    <div class="col">HospitalName</div>
+                </div>
+
+                @foreach (var item in ViewBag.Admins)
+                {
+
+                    <div class="row content_row">
+                        <div class="col txt_blue">
+                            <a href="@Url.Action("Info", "Admin", new { id = item.AdminID })" title="Patient Info" style="text-decoration:none">
+                                &nbsp;&nbsp;&nbsp;  @item.FullName
+                            </a>
+                        </div>
+                        <div class="col">@item.Phone</div>
+                        <div class="col">@item.Hospital.Name</div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

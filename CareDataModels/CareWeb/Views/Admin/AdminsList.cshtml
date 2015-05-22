@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CareDataModels.Models.Admin>
+
+@{
+    ViewBag.Title = "Admins";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ @section leftMenu
+{
+    <div>
+        @Html.Partial("SuperAdminMenu")
+    </div> 
+ }
+<div id="navigationBar">
+    @*<a href="@Url.Action("AdminHome", "Admin")" title="Home" style="text-decoration:none"> Home ></a>*@
+    <a href="@Url.Action("HospitalsList", "Admin")" title="Hospitals" style="text-decoration:none"> Home ></a> 
+    Admins
+</div>
+<div id="contentpane_New">
+    <div class="smallgraytext_New">
+        <table><tr><td>List of Admins</td><td style="padding-left:415px"><input class="textboxrowbutton" type="button" value="ADD ADMIN" onclick="location.href='@Url.Action("Create", "Admin")'" /></td></tr></table>
+    </div> 
+    
+    <div id="hospitalmenu" align="left">
+        <div id="hospitalslinksmenu" align="left">
+            <div id="listTablediv"><table class="listTable"><tr><td style="width:150px"><b>FullName</b></td><td style="width:900px"><b>Phone</b></td><td><b>HospitalName</b></td></tr></table></div>
+            @foreach (var item in Model)
+            {
+                 <a href="@Url.Action("Info", "Admin", new { id = item.AdminID })" title="Admin Info" style="text-decoration:none">
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.DisplayFor(modelItem => item.FullName) 
+                     &nbsp;&nbsp;&nbsp;
+                    @Html.DisplayFor(modelItem => item.Phone)
+                    <span style="text-align:right; float:right;margin-right:30px;">@Html.DisplayFor(modelItem => item.Hospital.Name) </span>
+                </a>
+            }
+        </div>
+    </div>
+</div>

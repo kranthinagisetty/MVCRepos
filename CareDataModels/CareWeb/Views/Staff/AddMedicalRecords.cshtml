@@ -1,0 +1,104 @@
+﻿@model  CareWeb.Models.UploadMedicalRecordsWithDoctorsVM
+@*HttpPostedFileBase*@
+@{
+    ViewBag.Title = "Upload Records";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+
+<div>
+    @Html.Partial("StaffMenuView")
+</div>
+}
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("PatientsList", "Staff")" title="Patients" style="text-decoration:none"> Patients></a>
+        <a href="@Url.Action("PatientInfo", "Staff", new { id = Model.patientInfo.PatientID })" title="Patient Info" style="text-decoration:none"> PatientInfo ></a>
+        Upload Records
+    </div>
+</div>
+
+
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+        <h2>Upload Records</h2>
+
+        <div class="row doctor_details_con">
+            <div class="col col_left">
+
+                <ul>
+                    <li>@Html.LabelFor(model => model.patientInfo.FullName, "Name"):  @Html.DisplayFor(model => model.patientInfo.FullName)</li>
+                    <li>@Html.LabelFor(model => model.patientInfo.Phone, "Phone"):    @Html.DisplayFor(model => model.patientInfo.Phone)</li>
+                </ul>
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("AddMedicalRecords", "Staff", new { id = ViewBag.PatientId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+            <div class="row two_col_form_container">
+
+
+                <div class="colSettings">
+                    @Html.Label("Record Type")
+                </div>
+                <div class="colSettings">
+                    @Html.DropDownListFor(model => model.patientInfo.Gender, new List<SelectListItem>() { new SelectListItem { Text = "X-ray", Value = "X-ray" }, new SelectListItem { Text = "CT-Scan", Value = "CT-Scan" } })
+                </div>
+
+                <div class="colSettings">
+                    @Html.LabelFor(model => model.medicalRecords.DoctorID, "Doctor")
+                </div>
+                <div class="colSettings">
+                    @Html.DropDownList("DoctorID", (SelectList)ViewBag.DoctorID)
+                </div>
+
+                <div class="colSettings">
+                    <input type="file" name="files" class="prescriptionuploadcontrol" />
+                </div>
+                <div class="colSettings">
+                    <input class="textboxrowbutton" type="submit" name="submitButton" value="Upload" />
+                </div>
+
+
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {var counter = 1;
+    $('#addupload').click(function(){                
+        var removebuttonid = 'remove_' + counter;
+        var uploadcontrolid = 'file_' + counter;
+        var addControl = '<div align="center" class="fileupload" id="' + uploadcontrolid + '">\
+                    <table><tr><td width="25%">\
+                    <span class="namelabelrecords">Name</span>\
+                    <input type="text" name="filename" /></td><td width="65%">\
+                    <input type="file" name="files" class="prescriptionuploadcontrol" />\
+                    <a href="#" id="' + removebuttonid + '">Remove</a>\
+                </td></tr></table></div>';
+        if (counter < 10) {
+            $('#display').before(addControl);
+            $("#" + removebuttonid).bind("click", function () {
+                $('#' + uploadcontrolid).remove();
+                counter--;
+            });
+            counter++;
+        }
+        else {
+            alert('More than 10 files cannot be uploaded at a time.')
+        }  
+    });
+
+});
+</script>
+}

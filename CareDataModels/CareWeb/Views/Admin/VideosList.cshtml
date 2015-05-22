@@ -1,0 +1,63 @@
+﻿@model CareDataModels.PicturesAndVideosVM.PicturesAndVideosVM
+
+@{
+    ViewBag.Title = "Pictures & Videos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section leftMenu
+{ 
+<div>  @Html.Partial("AdminMenu", null, ViewData)</div>
+    }
+
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+        Pictures & Videos
+    </div>
+</div>
+<br/>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row doctor_details_con">
+        <div>
+            <h2> Videos</h2>
+            <a href='javascript:showUploadDialog();' class="a_button" style="width: 35px;">upload</a>
+            <div id="uploaddiv"></div>
+            
+        </div>
+
+        <div class="DivVideosList">
+            @foreach (var item in Model.listVideos)
+            {
+
+                <object width="150" height="150" style="padding: 5px;" data="@String.Copy(item.VideoLink)"></object>
+
+            }
+
+            @foreach (var item in Model.listPictures)
+            {
+
+                <img width="150" height="150" style="padding: 5px;" src="data:image;base64,@System.Convert.ToBase64String(item.PictureContent)" />
+
+            }
+        </div>
+
+        </div>
+
+
+    <script type="text/javascript">
+            function showUploadDialog() {
+                $('#uploaddiv').load("@Url.Action("UploadVideosAndPictures", "Admin")");
+            }
+            function showAssignDialog() {
+                $('#uploaddiv').load("@Url.Action("AssignPicturesAndVideos", "Admin")");
+
+            }
+    </script> 
+</div>
+

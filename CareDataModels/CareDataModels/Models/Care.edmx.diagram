@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff0e7cb0eff54c90a75cf2caf26b06d1" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CareModel.Appointment" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.DisplayID" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.DoctorNotification" Width="1.5" PointX="7.5" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.Feedback" Width="1.5" PointX="10.5" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.Hospital" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.MedicalRecord" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.PatientNotification" Width="1.5" PointX="9.75" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.Prescription" Width="1.5" PointX="12.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.Role" Width="1.5" PointX="16.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareModel.Video" Width="1.5" PointX="3" PointY="33.5" IsExpanded="true" />
+        <AssociationConnector Association="CareModel.FK_Appointments_HospitalId" ManuallyRouted="false" />
+        <AssociationConnector Association="CareModel.FK_MedicalRecords_HospitalId" ManuallyRouted="false" />
+        <AssociationConnector Association="CareModel.FK_Prescriptions_HospitalId" ManuallyRouted="false" />
+        <AssociationConnector Association="CareModel.FK_Videos_HospitalId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CareModel.Picture" Width="1.5" PointX="3" PointY="12.125" />
+        <AssociationConnector Association="CareModel.FK_Pictures_HospitalId" />
+        <EntityTypeShape EntityType="CareModel.Admin" Width="1.5" PointX="3" PointY="15.875" />
+        <AssociationConnector Association="CareModel.FK_Admins_HospitalID" />
+        <EntityTypeShape EntityType="CareModel.Staff" Width="1.5" PointX="15" PointY="22.875" />
+        <AssociationConnector Association="CareModel.FK_Staff_HospitalID" />
+        <AssociationConnector Association="CareModel.DoctorNotificationsToStaff" />
+        <AssociationConnector Association="CareModel.PatientNotificationsToStaff" />
+        <EntityTypeShape EntityType="CareModel.Doctor" Width="1.5" PointX="5.25" PointY="23.125" />
+        <AssociationConnector Association="CareModel.FK_Appointments_DoctorId" />
+        <AssociationConnector Association="CareModel.FK_DoctorNotifications_DoctorId" />
+        <AssociationConnector Association="CareModel.FK_Feedback_DoctorId" />
+        <AssociationConnector Association="CareModel.FK_MedicalRecords_DoctorsId" />
+        <AssociationConnector Association="CareModel.FK_Prescriptions_DoctorId" />
+        <AssociationConnector Association="CareModel.HospitalToDoctor" />
+        <AssociationConnector Association="CareModel.MedicalRecordsToDoctors" />
+        <EntityTypeShape EntityType="CareModel.Patient" Width="1.5" PointX="7.5" PointY="28.625" />
+        <AssociationConnector Association="CareModel.FK_Appointments_PatientId" />
+        <AssociationConnector Association="CareModel.FK_Feedback_PatientId" />
+        <AssociationConnector Association="CareModel.FK_MedicalRecords_PatientId" />
+        <AssociationConnector Association="CareModel.FK_PatientNotifications_PatientId" />
+        <AssociationConnector Association="CareModel.FK_Prescriptions_PatientId" />
+        <AssociationConnector Association="CareModel.HospitalToPatient" />
+        <AssociationConnector Association="CareModel.PatientToDoctor" />
+        <AssociationConnector Association="CareModel.VideosToPatients" />
+        <EntityTypeShape EntityType="CareModel.Country" Width="1.5" PointX="8" PointY="12.25" />
+        <EntityTypeShape EntityType="CareModel.District" Width="1.5" PointX="12.875" PointY="13.375" />
+        <EntityTypeShape EntityType="CareModel.State" Width="1.5" PointX="10.625" PointY="13.375" />
+        <EntityTypeShape EntityType="CareModel.SubRegion" Width="1.5" PointX="15.125" PointY="13.5" />
+        <AssociationConnector Association="CareModel.FK_dbo_States_dbo_Countries_CountryId" />
+        <AssociationConnector Association="CareModel.FK_dbo_Districts_dbo_States_StateId" />
+        <AssociationConnector Association="CareModel.FK_dbo_SubRegions_dbo_Districts_DistrictId" />
+        <EntityTypeShape EntityType="CareModel.VideosandPicture" Width="1.5" PointX="3" PointY="27.375" />
+        <AssociationConnector Association="CareModel.FK_VideosandPictures_HospitalId" />
+        <EntityTypeShape EntityType="CareModel.sysdiagram" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CareModel.AppointmentSlot" Width="1.5" PointX="7.5" PointY="37.5" />
+        <AssociationConnector Association="CareModel.FK__Appointme__Docto__762C88DA" />
+        <EntityTypeShape EntityType="CareModel.DoctorAppointmentSchedule" Width="1.5" PointX="9.75" PointY="34.25" />
+        <AssociationConnector Association="CareModel.FK__DoctorApp__Appoi__7DCDAAA2" />
+        <AssociationConnector Association="CareModel.FK__DoctorApp__Docto__7CD98669" />
+        <EntityTypeShape EntityType="CareModel.DoctorAppointment" Width="1.5" PointX="12" PointY="31.5" />
+        <AssociationConnector Association="CareModel.FK__DoctorApp__Patie__12C8C788" />
+        <AssociationConnector Association="CareModel.FK__DoctorApp__Sched__13BCEBC1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

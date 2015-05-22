@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CareDataModels.Models.Video>
+
+@{
+    ViewBag.Title = "Videos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("PatientsListMenu")
+</div>
+<div id="contentpane">
+    <div class="currentpagetitlebox">
+        ASSIGN VIDEOS:
+    </div>
+    <div id="assignvideosmenu" align="left">
+        @foreach (var item in Model)
+        {
+            <div align="left">
+                <div class="assignvideoframe">
+                    <object width="100" height="100" data="@String.Copy(item.VideoLink)"></object>
+                    <input class="textboxrowbutton" type="submit" value="Assign" onclick="location.href='@Url.Action("AssignVideo", "Staff", new { id = item.VideoId, userId = ViewBag.PatientId })'">
+                </div>
+                <div class="assignvideodescription">
+                    Video Description:@Html.DisplayFor(a => item.Description)
+                  </div>
+            </div>
+        }
+
+    </div>
+</div>
+

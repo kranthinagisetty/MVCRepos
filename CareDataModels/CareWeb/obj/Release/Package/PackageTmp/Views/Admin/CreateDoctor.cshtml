@@ -1,0 +1,281 @@
+﻿@model CareDataModels.Models.Doctor
+
+@{
+    ViewBag.Title = "Add Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+    <div>
+        @Html.Partial("AdminMenu")
+    </div>
+}
+
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("DoctorsList", "Admin")" title="Doctors" style="text-decoration:none"> Doctors ></a>
+        CreateDoctor
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+        <h2>Add Doctor</h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("PartialValidationSummary")
+
+            <div class="row two_col_form_container">
+
+                <div class="col">
+                    <span class="red">*</span>  @Html.LabelFor(model => model.FirstName, "First Name")
+                    @Html.EditorFor(model => model.FirstName)
+                    @*@Html.ValidationMessageFor(model => model.FirstName)*@
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.LabelFor(model => model.LastName, "Last Name")
+                    @Html.EditorFor(model => model.LastName)
+                    @*@Html.ValidationMessageFor(model => model.LastName)*@
+                </div>
+                <div class="col">
+
+                    <span class="red">*</span>  @Html.LabelFor(model => model.Phone, "Mobile")
+                    @Html.EditorFor(model => model.Phone)
+                    @*@Html.ValidationMessageFor(model => model.Phone)*@
+
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>  @Html.LabelFor(model => model.Email, "Email Id")
+                    @Html.EditorFor(model => model.Email)
+                    @*@Html.ValidationMessageFor(model => model.Email)*@
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.LabelFor(model => model.Gender)
+                    @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "Male" }, new SelectListItem { Text = "Female", Value = "Female" } })
+                    @Html.ValidationMessageFor(model => model.Gender)
+                </div>
+                <div class="col">
+                    <span class="red">*</span>  @Html.LabelFor(model => model.Specialization, "Specialization")
+                    @Html.EditorFor(model => model.Specialization)
+                    @*@Html.ValidationMessageFor(model => model.Specialization)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.AddressLine1, "Address")
+                    @Html.TextAreaFor(model => model.AddressLine1)
+
+                    @*@Html.TextAreaFor(model => model.AddressLine1, new { @class = "multilineTextArea" })*@
+                    @*@Html.ValidationMessageFor(model => model.AddressLine1)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.Password)
+                    @Html.PasswordFor(model => model.Password, new { @id = "password" })
+                    @*@Html.ValidationMessageFor(model => model.Password)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("Country")
+                    @Html.DropDownListFor(model => model.AddressLine2, (IEnumerable<SelectListItem>)ViewBag.Country, "--Choose Your Country--", new { @id = "ddlCountry", @onchange = "javascript:GetStates(this.value);" })
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("State")
+                    @Html.DropDownList("State", (List<SelectListItem>)ViewBag.States, "--Choose Your State--", new { @id = "ddlstate", @onchange = "javascript:GetCities(this.value);" })
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.Label("City")
+                    @Html.DropDownList("City", (IEnumerable<SelectListItem>)ViewBag.Cities, "--Choose Your City--", new { @id = "ddlCity" })
+                </div>
+                <div class="col">
+                    <span class="red">*</span>    @Html.LabelFor(model => model.ZipCode)
+                    @Html.TextBoxFor(model => model.ZipCode)
+                    @*@Html.ValidationMessageFor(model => model.ZipCode)*@
+                </div>
+                <div class="col subfields_col">
+                    <div class="col">
+                        <span class="red">&nbsp;</span>  @Html.Label("Consulting Duration")
+                        @Html.DropDownListFor(model => model.Intervels, new List<SelectListItem>() { new SelectListItem { Text = "10", Value = "10" }, new SelectListItem { Text = "15", Value = "15" }, new SelectListItem { Text = "20", Value = "20" } })
+                        @Html.ValidationMessageFor(model => model.Intervels)
+                    </div>
+                    <div class="clr"></div>
+                    <h4></h4>
+
+                </div>
+                <div class="col">
+                    @Html.Label("Time Slot") <br />
+                    @Html.Label("From")
+                    @Html.TextBox("txtFrom")
+                    @Html.Label("To")
+                    @Html.TextBox("txtto")
+
+                </div>
+                <div class="clr"></div>
+                <div class="col">
+                    <input onclick="clear_form_elements(this.form)" type="button" value="Reset" />
+                    <input id="btnSubmit" type="submit" value="Submit" onclick="animate()" />
+                </div>
+
+            </div>
+
+
+            <div id="divLoading">
+                <p style="position: absolute; top: 30%; left: 45%; color: White;">
+                    Loading, please wait...
+                    <img src="~/Images/ajax-load.gif" width="50px" height="50px" />
+                </p>
+            </div>
+
+        }
+
+
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function clear_form_elements(ele) {
+
+            $(ele).find(':input').each(function () {
+                switch (this.type) {
+                    case 'password':
+                    case 'select-multiple':
+                    case 'select-one':
+                    case 'text':
+                    case 'tel':
+                    case 'email':
+                    case 'textarea':
+                        $(this).val('');
+                        break;
+                    case 'checkbox':
+                    case 'radio':
+                        this.checked = false;
+                }
+            });
+
+            $("#Gender").val("Male");
+            $("#Intervels").val("10");
+
+
+
+        }
+        /** Time Pickers**/
+        $('#txtFrom').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i a'
+        });
+        $('#txtto').timepicker({
+            'showDuration': true,
+            'autoclose': true,
+            'timeFormat': 'g:i a'
+        });
+        $('#defaultDeltaExample').datepair();
+        var defaultDeltaExampleEl = document.getElementById('defaultDeltaExample');
+        var defaultDeltaDatepair = new Datepair(defaultDeltaExampleEl, {
+            'defaultTimeDelta': 7200000
+        });
+        /** END Time Pickers**/
+        /**/
+        $('#txtFrom').on('changeTime', function () {
+            $('#txtto').focus();
+        });
+        $('#txtto').on('changeTime', function () {
+            var start = $('#txtFrom').val();
+            var end = $('#txtto').val();
+            if (start != "") {
+                if (Date.parse('01/01/2011 ' + end) < Date.parse('01/01/2011 ' + start)) {
+                    alert("End time should exceed the start time");
+                    $('#txtFrom').val('');
+                    $('#txtto').val('');
+                    $('#txtFrom').focus();
+                }
+                else if (Date.parse('01/01/2011 ' + end) - Date.parse('01/01/2011 ' + start) == 0) {
+                    alert("Start time and end time cannot be same");
+                    $('#txtFrom').val('');
+                    $('#txtto').val('');
+                    $('#txtFrom').focus();
+                }
+            }
+            else {
+                alert("Please select start time");
+                $('#txtFrom').focus();
+            }
+        });
+        function GetStates(_Id) {
+            if (_Id != "") {
+                var procemessage = "<option value='0'> Please wait...</option>";
+                var ddlStates = $("#ddlstate");
+                $("#ddlcity").html(procemessage).show();
+                $("#divLoading").show();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: '@Url.Action("GetStates", "Admin")',
+                    data: { "id": _Id },
+                    success: function (data) {
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        });
+                        $("#divLoading").hide();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                        $("#divLoading").hide();
+                    }
+                });
+            }
+            else {
+                $("#ddlstate").children('option:not(:first)').remove();
+                $("#ddlCity").children('option:not(:first)').remove();
+            }
+        }
+
+        function GetCities(_Id) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            var ddlcity = $("#ddlCity");
+            $("#ddlcity").html(procemessage).show();
+            $("#divLoading").show();
+            var url = "/Admin/GetCities/";
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetCities", "Admin")',
+                data: { "id": _Id },
+                success: function (data) {
+                    ddlcity.children('option:not(:first)').remove();
+                    $.each(data, function (id, option) {
+                        ddlcity.append($('<option></option>').val(option.id).html(option.name));
+                    });
+                    $("#divLoading").hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve cities.');
+                    $("#divLoading").hide();
+                }
+            });
+        }
+        $("#c_password").keyup(function () {
+            var pass1 = document.getElementById('password');
+            var pass2 = document.getElementById('c_password');
+            var goodColor = "#66cc66";
+            var badColor = "#ffeeee";
+            if (pass1.value == pass2.value) {
+                pass2.style.backgroundColor = "#fff";
+            } else {
+                pass2.style.backgroundColor = badColor;
+                $("#c_password").focus();
+            }
+        });
+    </script>
+
+
+
+
+}
+
+

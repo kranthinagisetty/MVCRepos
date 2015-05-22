@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CareDataModels.Models.Hospital>
+
+@{
+    ViewBag.Title = "Hospitals";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+<div>
+    @Html.Partial("SuperAdminMenu")
+</div>
+    }
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        @*<a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>*@
+        Hospitals
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+
+        <h2>Hospitals List</h2>
+
+        @*@using (Ajax.BeginForm("StaffList", "Admin", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "hospitalmenu" }))
+        {*@
+
+            @*<div class="col int_min_wid">
+                @Html.TextBox("SearchBox")
+            </div>
+            <div class="col">
+                <input type="submit" value="Search">
+            </div>*@
+
+
+            <div class="col f_right">
+                <input type="button" value="ADD Hospitals" onclick="location.href='@Url.Action("CreateHospital", "Admin")'" />
+
+            </div>
+            <div class="doc_grid_con">
+
+                <div class="row hr_row">
+                    <div class="col">Name</div>
+                    <div class="col"></div>
+                    <div class="col">HospitalID</div>
+                </div>
+                <h3>@ViewBag.Norecords</h3>
+                @foreach (var item in Model)
+                {
+
+                    <div class="row content_row">
+                        <div class="col txt_blue">
+                            <a href="@Url.Action("HospitalInfo", "Admin", new { id = item.HospitalId })" title="Admin Info" style="text-decoration:none">
+                                &nbsp;&nbsp;&nbsp;
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </a>
+                        </div>
+                        <div class="col"></div>
+                        <div class="col">@Html.DisplayFor(modelItem => item.HospitalDisplayId)</div>
+                    </div>
+                }
+
+            </div>
+
+        @*}*@
+    </div>
+</div>
+
+
+

@@ -1,0 +1,69 @@
+﻿@model CareDataModels.Models.Appointment
+
+@{
+    ViewBag.Title = "APPOINTMENTS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section leftMenu
+{
+    <div>
+     @Html.Partial("AdminMenu")
+    </div>
+}
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Appointments" style="text-decoration:none"> Appointments ></a>
+        EditAppointment
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row">
+        <h2> Edit Appointment</h2>
+
+       @using (Html.BeginForm())
+       {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.AppointmentId)//Used for ScheduleId
+        @Html.HiddenFor(model => model.AddedBy)//Used for Timeslot
+        @Html.HiddenFor(model => model.AppointmentDate)//Used for Timeslot
+        @Html.Partial("PartialValidationSummary")
+
+
+            <div class="row two_col_form_container">
+
+                <div class="colSettings">
+                    @Html.LabelFor(model => model.PatientId, "Patient id") 
+                </div>
+                <div class="colSettings">
+                    @Html.DropDownList("PatientID")                   
+                </div>
+                <div class="colSettings">
+                    @Html.LabelFor(model => model.DoctorId, "Doctor's Name")
+                   
+                </div>
+                <div class="colSettings">
+                    @Html.DropDownList("DoctorID")
+                </div>
+                <div class="colSettings">
+                    @Html.Label("Time")
+                </div>
+                <div class="colSettings">
+                    @Html.DisplayFor(model => model.AddedBy)
+                </div>
+                <div class="colSettings">
+                    <input class="editbutton" type="button" value="CANCEL APPOINTMENT" onclick="location.href='@Url.Action("DeleteAppointment", "Admin", new { id = Model.UpdatedBy })'" />
+                    <input class="editbutton" type="submit" value="SUBMIT" />
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+</div>

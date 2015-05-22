@@ -1,0 +1,147 @@
+﻿@model IEnumerable<CareDataModels.Appointments.Appointments>
+
+@{
+    ViewBag.Title = "Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section leftMenu
+{
+    <div>
+        @*@Html.Partial("AppointmentsListMenu")*@
+        @Html.Partial("StaffMenuView")
+    </div>
+}
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+        Appointments
+    </div>
+</div>
+
+
+<div class="content_wrapper fancy_fields">
+
+    @using (Html.BeginForm("AppointmentsList", "Staff", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col dropdown_dr">
+                @Html.DropDownList("DoctorList", (IEnumerable<SelectListItem>)ViewBag.DoctorID, new { @id = "DoctorId" })
+            </div>
+            <div class="col">
+                <input class="slottxt" id="SelectedDate" value="@ViewBag.SelectedDate" name="SelectedDate" style="width:230px" type="text" />
+            </div>
+            <div class="col">
+                <input type="submit" value="GET APPOINTMENTS" />
+            </div>
+        </div>
+    }
+    @if (Model.Count() > 0)
+    {
+        <div class="row">
+            <div class="col"><input id="Cancelappointement" type="submit" value="Cancel appointement" /></div>
+            <div class="col slot_timming">
+                @Html.Label("Slot timing")
+                @Html.DropDownList("SlotsList", (IEnumerable<SelectListItem>)ViewBag.AppointmentSlotsID, "-- Select --", new { @id = "TimeSlotsId" })
+            </div>
+        </div>
+    }
+
+    @foreach (var item in Model)
+    {
+        if (item.IsBooked == false)
+        {
+            <div class="Slotrow">
+                <div class="col col_slot">
+                    <div class="appointment_slot">
+                        <div class="slot_time">
+                            <a href="@Url.Action("RegisterAppointment", "Staff", new { doctorID = item.DoctorsID, ScheduleId = item.ScheduleId, date = @ViewBag.SelectedDate })" class="anchor_text" title="Appointment Info">
+                                Time
+                                <span> @item.Timings_Slot.Split('-')[0].Split(' ')[0]</span>  @item.Timings_Slot.Split('-')[0].Split(' ')[1]
+                            </a>
+                        </div>
+                        <div class="slot_right">
+                            <a href="#">Patient <span>@Html.DisplayFor(modelItem => item.patientName)</span></a>
+                            <input type="checkbox" class="slotchk">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="Slotrow">
+                <div class="col col_slot">
+                    <div class="appointment_slot">
+                        <div class="slot_time booked_slot">
+                            <a href="@Url.Action("EditAppointment", "Staff", new { id = item.AppointmentId, ScheduleId = item.ScheduleId, DoctorId = item.DoctorsID })" class="anchor_text" title="Appointment Info">
+                                Time
+                                <span> @item.Timings_Slot.Split('-')[0].Split(' ')[0]</span>  @item.Timings_Slot.Split('-')[0].Split(' ')[1]
+                            </a>
+                        </div>
+                        <div class="slot_right">
+                            <a href="#">Patient <span>@Html.DisplayFor(modelItem => item.patientName)</span></a>
+                            @Html.CheckBoxFor(modelItem => item.IsBooked, new { onclick = "return;", style = "margin-left: 92px;margin-top: 34px;" })
+                            @Html.HiddenFor(modelItem => item.AppointmentId)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    }
+
+
+
+    <div class="row slot_status">
+        <span class="slot_empty"></span> <label>Empty</label>
+        <span class="slot_booked"></span> <label>Booked</label>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#TimeSlotsId').change(function () {
+            if ($('#TimeSlotsId').val() != "") {
+                var id = $(this).val(); 
+                var doctorID = $("#DoctorId").val();
+                var url = '@Url.Action("GetSlotsBasedonTime", "Staff")?id=' + id + "&doctorID=" + doctorID + "&SelectedDate=" + $.datepicker.formatDate('dd/mm/yy', new Date($("#SelectedDate").val()));
+                window.location.href = url;
+            }        
+    }); 
+    $(document).ready(function () {
+        $("#SelectedDate").datepicker({
+            buttonImageOnly: true,
+            minDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+            beforeShow: function (textbox, instance) {
+                instance.dpDiv.css({ marginTop: (-textbox.offsetHeight) + 'px', marginLeft: textbox.offsetWidth + 'px' })
+            }
+                , dateFormat: 'mm/dd/yy'
+        });
+        $("#SelectedDate").focusout(function () {
+            var txtDate = $("#SelectedDate").val();
+            var tomarrowDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); 
+            //var Today = (tomarrowDate.getDate()) + "/" + (tomarrowDate.getMonth()+1 )+ "/" + tomarrowDate.getFullYear(); 
+            var Today = (tomarrowDate.getMonth() + 1) + "/" + (tomarrowDate.getDate()) + "/" + tomarrowDate.getFullYear();
+            if (txtDate < Today) {
+               $("#SelectedDate").val(Today);
+                alert("Please select future date");
+            }
+        });
+    });
+
+
+    $("#Cancelappointement").click(function () { 
+        var carr = ""; 
+        $("input:checked").each(function () {
+            carr = carr + $(this).siblings().next().next().next().val() + ',';
+        }); 
+        var url = '@Url.Action("CancelMultipleAppointment", "Staff")?strid=' + carr;
+            window.location.href = url; 
+    });
+    </script>
+}

@@ -1,0 +1,340 @@
+﻿@model CareDataModels.DoctorInfo.DoctorInfo
+
+@{
+    ViewBag.Title = "Edit Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid grid = new WebGrid(Model.AppointmentSlotVM);
+}
+@section leftMenu
+{
+    <div>@Html.Partial("AdminMenu")</div>
+}
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Admin")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("DoctorsList", "Admin")" title="Doctors" style="text-decoration:none"> Doctors ></a>
+        <a href="@Url.Action("DoctorInfo", "Admin", new { id = Model.DoctorVM.DoctorID })" title="DoctorsInfo" style="text-decoration:none"> DoctorsInfo ></a>
+        EditDoctor
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+
+    <div class="row">
+        <h2>Edit Doctor</h2>
+    </div>      
+
+    @using (Html.BeginForm())
+    {
+            @Html.AntiForgeryToken()
+            @Html.Partial("PartialValidationSummary")
+            @Html.HiddenFor(model => model.DoctorVM.DoctorID)
+        
+        
+          <div class="row two_col_form_container">
+
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.DoctorVM.FirstName, "First Name")
+                    @Html.EditorFor(model => model.DoctorVM.FirstName)
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.FirstName)*@
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.LabelFor(model => model.DoctorVM.LastName, "Last Name")
+                    @Html.EditorFor(model => model.DoctorVM.LastName)
+                    @Html.ValidationMessageFor(model => model.DoctorVM.LastName)
+                </div>
+                <div class="col">
+
+                    <span class="red">*</span>    @Html.LabelFor(model => model.DoctorVM.Phone, "Mobile")
+                    @Html.EditorFor(model => model.DoctorVM.Phone)
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.Phone)*@
+
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.LabelFor(model => model.DoctorVM.Email, "email id")
+                    @Html.EditorFor(model => model.DoctorVM.Email)
+                    @Html.ValidationMessageFor(model => model.DoctorVM.Email)
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>  @Html.LabelFor(model => model.DoctorVM.Gender)
+                    @Html.DropDownListFor(model => model.DoctorVM.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "Male" }, new SelectListItem { Text = "Female", Value = "Female" } })
+                    @Html.ValidationMessageFor(model => model.DoctorVM.Gender)
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.DoctorVM.Specialization)
+                    @Html.EditorFor(model => model.DoctorVM.Specialization)
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.Specialization)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.DoctorVM.AddressLine1, "Address")
+                    @Html.TextAreaFor(model => model.DoctorVM.AddressLine1)
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.AddressLine1)*@
+                    @*@Html.TextAreaFor(model => model.AddressLine1, new { @class = "multilineTextArea" })*@
+                    @*@Html.ValidationMessageFor(model => model.AddressLine1)*@
+                </div>
+                <div class="col">
+                    <span class="red">*</span>    @Html.LabelFor(model => model.DoctorVM.Password)
+                    @Html.PasswordFor(x => x.DoctorVM.Password, new { value = Model.DoctorVM.Password })
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.Password)*@
+                </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>  @Html.Label("Country")
+                    @Html.DropDownList("Country", (IEnumerable<SelectListItem>)ViewBag.Country, new { @id = "ddlCountry", @onchange = "javascript:GetStates(this.value);" })
+                 </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.Label("State")
+                    @Html.DropDownListFor(x => x.DoctorVM.State, (IEnumerable<SelectListItem>)ViewBag.States, new { @id = "ddlstate",  @onchange = "javascript:GetCities(this.value);" })
+                 </div>
+                <div class="col">
+                    <span class="red">&nbsp;</span>   @Html.Label("City")
+                    @Html.DropDownListFor(x => x.DoctorVM.City, (IEnumerable<SelectListItem>)ViewBag.Cities, new { @id = "ddlCity" })
+                    </div>
+                <div class="col">
+                    <span class="red">*</span>   @Html.LabelFor(model => model.DoctorVM.ZipCode, "Zip Code")
+                    @Html.TextBoxFor(model => model.DoctorVM.ZipCode)
+                    @*@Html.ValidationMessageFor(model => model.DoctorVM.ZipCode)*@
+                </div>
+                <div class="col subfields_col">
+
+                    <span class="red">&nbsp;</span>  @Html.Label("Slot timings")
+                    <ul class="slot_timmings">
+                        @grid.GetHtml(
+                            tableStyle: "webgrid-table",
+                            headerStyle: "webgrid-header",
+                            alternatingRowStyle: "webgrid-alternating-row",
+                            columns: new[]{
+                            grid.Column(format: @<span> <span>@item.SlotFrom - @item.SlotTo </span></span>),
+                            grid.Column(format:@<text>@Html.ActionLink("Delete", "", "", null, new { onclick = "return delMeal(" + item.AppointmentSlotsID + ")" })</text>)
+                            //grid.Column(header: "Action",format:@<text><a href="#" id="Delete_@item.AppointmentSlotsID" class="delete">Delete</a></text>)
+                            //grid.Column(header: "", format: p => Html.Raw(Delete(p)))
+                    })
+                    </ul>
+
+                   
+                  <div class="clr"></div>
+                    
+
+                 
+              </div>
+                <div class="col">
+                  <span class="red">&nbsp;</span>  @Html.Label("Consulting Duration")
+                  @Html.DropDownListFor(model => model.DoctorVM.Intervels, new List<SelectListItem>() { new SelectListItem { Text = "10", Value = "10" }, new SelectListItem { Text = "15", Value = "15" }, new SelectListItem { Text = "20", Value = "20" } })
+                  @Html.ValidationMessageFor(model => model.DoctorVM.Intervels)
+
+                    <div class="col">
+                        <h4>@Html.Label("Time Slot")</h4>
+
+                        <br />
+                        @Html.Label("From")
+                        @Html.TextBox("txtFrom")
+
+
+
+                        @Html.Label("To")
+                        @Html.TextBox("txtto")
+                    </div>
+                </div>  
+               
+              
+
+                  <div class="clr"></div>
+
+              </div>
+               
+          <div class="col">@ViewBag.msgSlot</div>
+           <div class="row">
+            <input  type="submit" value="Submit" />
+         </div>
+             
+          
+    }
+
+
+       
+
+    </div>
+
+@functions{
+    string Delete(dynamic p)
+    {
+        string actionController = Url.Action("Delete", "Staff", new { id = 11 });
+        return "<form style='display:inline;' method='post' action='" + actionController + "'><input type='submit' value='Delete' onclick=\"return confirm('Are you sure?')\"/></form>";
+    }
+}
+
+
+@section Scripts {
+    <script type="text/javascript">
+        //
+        function delMeal(pid) {
+
+            if (confirm("Do you want to delete Slot")) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("AppointmentsValidation", "Admin")',
+                    data: { id: pid }, dataType: "json",
+                    success: function (data) {
+                        if (data == "Sucess") {
+                            if (confirm("Some Appointments are already Booked in this Slot, Do you want to delete")) {
+                                DeleteAppointments();
+                            }
+                        }
+                        else if (data == "NoAppointments") {
+                            DeleteAppointments(pid);
+                            //alert('Slots Deleted Sucessfully');
+                        }
+                    }
+                });
+            } return false; //prevent the link's action
+        }
+        //
+        function DeleteAppointments(pid) {
+            @*$.ajax({
+                type: "GET",
+                url: '@Url.Action("Delete", "Admin")',
+                data: { id: pid }, dataType: "json",
+                success: function (data) {
+                }
+            });*@
+            var url = '@Url.Action("Delete", "Admin")?id=' + pid;
+            window.location.href = url;
+        }
+
+        //
+        function GetStates(_Id) {
+
+            var procemessage = "<option value='0'> Please wait...</option>";
+            var ddlStates = $("#ddlstate");
+
+            $("#ddlcity").html(procemessage).show();
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetStates", "Admin")',
+                data: { "id": _Id },
+                success: function (data) {
+
+                    ddlStates.html('');
+
+                    $.each(data, function (id, option) {
+
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+
+        }
+
+
+        function GetCities(_Id) {
+
+            var procemessage = "<option value='0'> Please wait...</option>";
+            var ddlcity = $("#ddlCity");
+
+            $("#ddlcity").html(procemessage).show();
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetCities", "Admin")',
+                data: { "id": _Id },
+                success: function (data) {
+                    ddlcity.html('');
+
+                    $.each(data, function (id, option) {
+
+                        ddlcity.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve cities.');
+
+                }
+            });
+
+
+
+        }
+
+        $("#txtFrom").blur(function () {
+
+            $('#spanSlot').text('');
+        });
+
+        $("#txtto").blur(function () {
+
+            $('#spanSlot').text('');
+        });
+
+
+        /** Time Pickers**/
+        $('#txtFrom').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i a'
+        });
+        $('#txtto').timepicker({
+            'showDuration': true,
+            'autoclose': true,
+            'timeFormat': 'g:i a'
+        });
+        $('#defaultDeltaExample').datepair();
+        var defaultDeltaExampleEl = document.getElementById('defaultDeltaExample');
+        var defaultDeltaDatepair = new Datepair(defaultDeltaExampleEl, {
+            'defaultTimeDelta': 7200000
+        });
+        /** END Time Pickers**/
+        /**/
+        $('#txtFrom').on('changeTime', function () {
+            $('#txtto').focus();
+
+        });
+        $('#txtto').on('changeTime', function () {
+
+
+            var start = $('#txtFrom').val();
+            var end = $('#txtto').val();
+            if (start != "") {
+                if (Date.parse('01/01/2011 ' + end) < Date.parse('01/01/2011 ' + start)) {
+                    alert("End time should exceed the start time");
+                    $('#txtFrom').val('');
+                    $('#txtto').val('');
+                    $('#txtFrom').focus();
+                }
+                else if (Date.parse('01/01/2011 ' + end) - Date.parse('01/01/2011 ' + start) == 0) {
+                    alert("Start time and end time cannot be same");
+                    $('#txtFrom').val('');
+                    $('#txtto').val('');
+                    $('#txtFrom').focus();
+                }
+            }
+            else {
+                alert("Please select start time");
+                $('#txtFrom').focus();
+            }
+
+        });
+        /**/
+    </script>
+}
+
+
+
+
+
+

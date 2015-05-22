@@ -1,0 +1,6 @@
+2015-05-21 12:58:09,488 - System.Net.Http.Formatting;JsonMediaTypeFormatter;GetPerRequestFormatterInstance;Obtaining formatter of type 'JsonMediaTypeFormatter' for type='IEdmModel', mediaType=''
+2015-05-21 12:58:09,504 - System.Net.Http.Formatting;JsonMediaTypeFormatter;GetPerRequestFormatterInstance;Will use same 'JsonMediaTypeFormatter' formatter
+2015-05-21 12:58:09,504 - System.Net.Http.Formatting;FormUrlEncodedMediaTypeFormatter;GetPerRequestFormatterInstance;Obtaining formatter of type 'FormUrlEncodedMediaTypeFormatter' for type='IEdmModel', mediaType=''
+2015-05-21 12:58:09,504 - System.Net.Http.Formatting;FormUrlEncodedMediaTypeFormatter;GetPerRequestFormatterInstance;Will use same 'FormUrlEncodedMediaTypeFormatter' formatter
+2015-05-21 12:58:09,504 - System.Net.Http.Formatting;JQueryMvcFormUrlEncodedFormatter;GetPerRequestFormatterInstance;Obtaining formatter of type 'JQueryMvcFormUrlEncodedFormatter' for type='IEdmModel', mediaType=''
+2015-05-21 12:58:09,504 - System.Net.Http.Formatting;JQueryMvcFormUrlEncodedFormatter;GetPerRequestFormatterInstance;Will use same 'JQueryMvcFormUrlEncodedFormatter' formatter

@@ -1,0 +1,29 @@
+﻿@model CareDataModels.Models.Patient
+<div id="dlgAssignPictureAndVideo" style="background-color:#E5e5e5">
+    <div class="smallgraytext_New">
+        Search Patient
+        @using (Html.BeginForm("SearchPatient", "Staff", "FormMethod.Get"))
+        {
+            @Html.AntiForgeryToken() 
+            @Html.TextBox("Patienttxt")
+            <input class="textboxrowbutton" type="submit" value="Search">
+            <br /><br /> <br /><br />
+        }
+        @using (Html.BeginForm("AssignPicturesAndVideos", "Staff", "FormMethod.Post"))
+        {  
+            <br /><br /><br /><br />
+            <input class="textboxrowbutton" type="submit" value="Assign">
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#dlgAssignPictureAndVideo").dialog({
+            model: true,
+            autoOpen: true,
+            resizable: false,
+            width:500,
+            height:350
+        });
+    })
+</script>

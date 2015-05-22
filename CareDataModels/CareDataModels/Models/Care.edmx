@@ -1,0 +1,2467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="AdminID" />
+          </Key>
+          <Property Name="AdminID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospitalID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="201" StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="FailedLoginAttempts" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" />
+          <Property Name="IsCancelled" Type="bit" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="AppointmentSlots">
+          <Key>
+            <PropertyRef Name="AppointmentSlotsID" />
+          </Key>
+          <Property Name="AppointmentSlotsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorID" Type="int" />
+          <Property Name="SlotFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="SlotTo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="isdeleted" Type="bit" />
+          <Property Name="SlotFromDateTime" Type="datetime" />
+          <Property Name="SlotToDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DisplayIDs">
+          <Key>
+            <PropertyRef Name="PropertyName" />
+          </Key>
+          <Property Name="PropertyName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PropertyValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Districts">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar(max)" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DoctorAppointments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hospitald" Type="int" />
+          <Property Name="ScheduleId" Type="int" />
+          <Property Name="PatientId" Type="int" />
+          <Property Name="AppointmentDate" Type="datetime" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="IsSlotBooked" Type="bit" />
+        </EntityType>
+        <EntityType Name="DoctorAppointmentSchedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorID" Type="int" />
+          <Property Name="AppointmentSlotID" Type="int" />
+          <Property Name="Timings_Slot" Type="varchar" MaxLength="100" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="isdeleted" Type="bit" />
+          <Property Name="SlotFromDateTime" Type="datetime" />
+          <Property Name="SlotToDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DoctorNotifications">
+          <Key>
+            <PropertyRef Name="DoctorNotificationId" />
+          </Key>
+          <Property Name="DoctorNotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationText" Type="nvarchar" MaxLength="255" />
+          <Property Name="NotificationTime" Type="datetime" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DoctorNotificationsToStaff">
+          <Key>
+            <PropertyRef Name="DoctorNotificationId" />
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="DoctorNotificationId" Type="int" Nullable="false" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="205" StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Specialization" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FailedLoginAttempts" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="HospitalId" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="Intervels" Type="int" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FeedbackText" Type="nvarchar" MaxLength="255" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Hospitals">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospitalDisplayId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="ImageContent" Type="image" />
+        </EntityType>
+        <EntityType Name="HospitalToDoctor">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HospitalToPatient">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedicalRecords">
+          <Key>
+            <PropertyRef Name="MedicalRecordId" />
+          </Key>
+          <Property Name="MedicalRecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedicalRecordName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MedicalRecordImage" Type="image" />
+          <Property Name="ImageExtension" Type="nvarchar" MaxLength="50" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="DoctorID" Type="int" />
+        </EntityType>
+        <EntityType Name="MedicalRecordsToDoctors">
+          <Key>
+            <PropertyRef Name="MedicalRecordId" />
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="MedicalRecordId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientNotifications">
+          <Key>
+            <PropertyRef Name="PatientNotificationId" />
+          </Key>
+          <Property Name="PatientNotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationText" Type="nvarchar" MaxLength="255" />
+          <Property Name="NotificationTime" Type="datetime" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PatientNotificationsToStaff">
+          <Key>
+            <PropertyRef Name="PatientNotificationId" />
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="PatientNotificationId" Type="int" Nullable="false" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="201" StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="Profession" Type="nvarchar" MaxLength="20" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="Age" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="FailedLoginAttempts" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="ImageContent" Type="image" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="PatientToDoctor">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pictures">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PictureContent" Type="image" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="HospitalId" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Prescriptions">
+          <Key>
+            <PropertyRef Name="PrescriptionId" />
+          </Key>
+          <Property Name="PrescriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrescriptionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrescriptionText" Type="nvarchar" MaxLength="500" />
+          <Property Name="PrescriptionImage" Type="image" />
+          <Property Name="ImageExtension" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospitalID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="201" StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FailedLoginAttempts" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="20" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubRegions">
+          <Key>
+            <PropertyRef Name="SubRegionId" />
+          </Key>
+          <Property Name="SubRegionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubRegionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DistrictId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Videos">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="VideoLink" Type="nvarchar" MaxLength="500" />
+          <Property Name="HospitalId" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="VideosandPictures">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PictureContent" Type="image" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="HospitalId" Type="int" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="AddedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="VideosToPatients">
+          <Key>
+            <PropertyRef Name="VideoId" />
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="VideoId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Appointme__Docto__762C88DA">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="0..1" />
+          <End Role="AppointmentSlots" Type="Self.AppointmentSlots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="AppointmentSlots">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Appoi__7DCDAAA2">
+          <End Role="AppointmentSlots" Type="Self.AppointmentSlots" Multiplicity="0..1" />
+          <End Role="DoctorAppointmentSchedule" Type="Self.DoctorAppointmentSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentSlots">
+              <PropertyRef Name="AppointmentSlotsID" />
+            </Principal>
+            <Dependent Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="AppointmentSlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Docto__7CD98669">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="0..1" />
+          <End Role="DoctorAppointmentSchedule" Type="Self.DoctorAppointmentSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Patie__12C8C788">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="0..1" />
+          <End Role="DoctorAppointments" Type="Self.DoctorAppointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="DoctorAppointments">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Sched__13BCEBC1">
+          <End Role="DoctorAppointmentSchedule" Type="Self.DoctorAppointmentSchedule" Multiplicity="0..1" />
+          <End Role="DoctorAppointments" Type="Self.DoctorAppointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="ScheduleId" />
+            </Principal>
+            <Dependent Role="DoctorAppointments">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Admins_HospitalID">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Districts_dbo_States_StateId">
+          <End Role="States" Type="Self.States" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Districts" Type="Self.Districts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Districts">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_States_dbo_Countries_CountryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="States" Type="Self.States" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="States">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SubRegions_dbo_Districts_DistrictId">
+          <End Role="Districts" Type="Self.Districts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SubRegions" Type="Self.SubRegions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="SubRegions">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorNotifications_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="DoctorNotifications" Type="Self.DoctorNotifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="DoctorNotifications">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorNotificationsToStaff_DoctorNotificationId">
+          <End Role="DoctorNotifications" Type="Self.DoctorNotifications" Multiplicity="1" />
+          <End Role="DoctorNotificationsToStaff" Type="Self.DoctorNotificationsToStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorNotifications">
+              <PropertyRef Name="DoctorNotificationId" />
+            </Principal>
+            <Dependent Role="DoctorNotificationsToStaff">
+              <PropertyRef Name="DoctorNotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorNotificationsToStaff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="DoctorNotificationsToStaff" Type="Self.DoctorNotificationsToStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="DoctorNotificationsToStaff">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalToDoctor_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="HospitalToDoctor" Type="Self.HospitalToDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="HospitalToDoctor">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalToDoctor_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="HospitalToDoctor" Type="Self.HospitalToDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="HospitalToDoctor">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalToPatient_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="HospitalToPatient" Type="Self.HospitalToPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="HospitalToPatient">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalToPatient_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="HospitalToPatient" Type="Self.HospitalToPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="HospitalToPatient">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_DoctorsId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="0..1" />
+          <End Role="MedicalRecords" Type="Self.MedicalRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="MedicalRecords">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="MedicalRecords" Type="Self.MedicalRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="MedicalRecords">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="MedicalRecords" Type="Self.MedicalRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="MedicalRecords">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecordsToDoctors_MedicalRecordId">
+          <End Role="MedicalRecords" Type="Self.MedicalRecords" Multiplicity="1" />
+          <End Role="MedicalRecordsToDoctors" Type="Self.MedicalRecordsToDoctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecords">
+              <PropertyRef Name="MedicalRecordId" />
+            </Principal>
+            <Dependent Role="MedicalRecordsToDoctors">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientNotifications_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="PatientNotifications" Type="Self.PatientNotifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="PatientNotifications">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientNotificationsToStaff_PatientNotificationId">
+          <End Role="PatientNotifications" Type="Self.PatientNotifications" Multiplicity="1" />
+          <End Role="PatientNotificationsToStaff" Type="Self.PatientNotificationsToStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientNotifications">
+              <PropertyRef Name="PatientNotificationId" />
+            </Principal>
+            <Dependent Role="PatientNotificationsToStaff">
+              <PropertyRef Name="PatientNotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientNotificationsToStaff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="PatientNotificationsToStaff" Type="Self.PatientNotificationsToStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="PatientNotificationsToStaff">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientToDoctor_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="PatientToDoctor" Type="Self.PatientToDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="PatientToDoctor">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientToDoctor_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="PatientToDoctor" Type="Self.PatientToDoctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="PatientToDoctor">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pictures_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="0..1" />
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Pictures">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="Prescriptions" Type="Self.Prescriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Prescriptions">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="Prescriptions" Type="Self.Prescriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Prescriptions">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Prescriptions" Type="Self.Prescriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Prescriptions">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_HospitalID">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Videos_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="0..1" />
+          <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Videos">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideosandPictures_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="0..1" />
+          <End Role="VideosandPictures" Type="Self.VideosandPictures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="VideosandPictures">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideosToPatients_VideoId">
+          <End Role="Videos" Type="Self.Videos" Multiplicity="1" />
+          <End Role="VideosToPatients" Type="Self.VideosToPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Videos">
+              <PropertyRef Name="VideoId" />
+            </Principal>
+            <Dependent Role="VideosToPatients">
+              <PropertyRef Name="VideoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_MedicalRecordsToDoctors_DoctorId">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="MedicalRecordsToDoctors" Type="Self.MedicalRecordsToDoctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="MedicalRecordsToDoctors">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_VideosToPatients_PatientId">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="VideosToPatients" Type="Self.VideosToPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="VideosToPatients">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetDisplayID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idtype" Type="varchar" Mode="In" />
+          <Parameter Name="displayId" Type="varchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="CareModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppointmentSlots" EntityType="Self.AppointmentSlots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisplayIDs" EntityType="Self.DisplayIDs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Districts" EntityType="Self.Districts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorAppointments" EntityType="Self.DoctorAppointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorAppointmentSchedule" EntityType="Self.DoctorAppointmentSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorNotifications" EntityType="Self.DoctorNotifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorNotificationsToStaff" EntityType="Self.DoctorNotificationsToStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospitals" EntityType="Self.Hospitals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalToDoctor" EntityType="Self.HospitalToDoctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalToPatient" EntityType="Self.HospitalToPatient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalRecords" EntityType="Self.MedicalRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalRecordsToDoctors" EntityType="Self.MedicalRecordsToDoctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientNotifications" EntityType="Self.PatientNotifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientNotificationsToStaff" EntityType="Self.PatientNotificationsToStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientToDoctor" EntityType="Self.PatientToDoctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prescriptions" EntityType="Self.Prescriptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubRegions" EntityType="Self.SubRegions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideosandPictures" EntityType="Self.VideosandPictures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideosToPatients" EntityType="Self.VideosToPatients" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Appointme__Docto__762C88DA" Association="Self.FK__Appointme__Docto__762C88DA">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="AppointmentSlots" EntitySet="AppointmentSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Appoi__7DCDAAA2" Association="Self.FK__DoctorApp__Appoi__7DCDAAA2">
+            <End Role="AppointmentSlots" EntitySet="AppointmentSlots" />
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Docto__7CD98669" Association="Self.FK__DoctorApp__Docto__7CD98669">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Patie__12C8C788" Association="Self.FK__DoctorApp__Patie__12C8C788">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="DoctorAppointments" EntitySet="DoctorAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Sched__13BCEBC1" Association="Self.FK__DoctorApp__Sched__13BCEBC1">
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedule" />
+            <End Role="DoctorAppointments" EntitySet="DoctorAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Admins_HospitalID" Association="Self.FK_Admins_HospitalID">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_DoctorId" Association="Self.FK_Appointments_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_HospitalId" Association="Self.FK_Appointments_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_PatientId" Association="Self.FK_Appointments_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Districts_dbo_States_StateId" Association="Self.FK_dbo_Districts_dbo_States_StateId">
+            <End Role="States" EntitySet="States" />
+            <End Role="Districts" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_States_dbo_Countries_CountryId" Association="Self.FK_dbo_States_dbo_Countries_CountryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="States" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SubRegions_dbo_Districts_DistrictId" Association="Self.FK_dbo_SubRegions_dbo_Districts_DistrictId">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="SubRegions" EntitySet="SubRegions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorNotifications_DoctorId" Association="Self.FK_DoctorNotifications_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="DoctorNotifications" EntitySet="DoctorNotifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorNotificationsToStaff_DoctorNotificationId" Association="Self.FK_DoctorNotificationsToStaff_DoctorNotificationId">
+            <End Role="DoctorNotifications" EntitySet="DoctorNotifications" />
+            <End Role="DoctorNotificationsToStaff" EntitySet="DoctorNotificationsToStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorNotificationsToStaff_StaffId" Association="Self.FK_DoctorNotificationsToStaff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="DoctorNotificationsToStaff" EntitySet="DoctorNotificationsToStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_DoctorId" Association="Self.FK_Feedback_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_PatientId" Association="Self.FK_Feedback_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalToDoctor_DoctorId" Association="Self.FK_HospitalToDoctor_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="HospitalToDoctor" EntitySet="HospitalToDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalToDoctor_HospitalId" Association="Self.FK_HospitalToDoctor_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="HospitalToDoctor" EntitySet="HospitalToDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalToPatient_HospitalId" Association="Self.FK_HospitalToPatient_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="HospitalToPatient" EntitySet="HospitalToPatient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalToPatient_PatientId" Association="Self.FK_HospitalToPatient_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="HospitalToPatient" EntitySet="HospitalToPatient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_DoctorsId" Association="Self.FK_MedicalRecords_DoctorsId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="MedicalRecords" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_HospitalId" Association="Self.FK_MedicalRecords_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="MedicalRecords" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_PatientId" Association="Self.FK_MedicalRecords_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="MedicalRecords" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecordsToDoctors_MedicalRecordId" Association="Self.FK_MedicalRecordsToDoctors_MedicalRecordId">
+            <End Role="MedicalRecords" EntitySet="MedicalRecords" />
+            <End Role="MedicalRecordsToDoctors" EntitySet="MedicalRecordsToDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientNotifications_PatientId" Association="Self.FK_PatientNotifications_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientNotifications" EntitySet="PatientNotifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientNotificationsToStaff_PatientNotificationId" Association="Self.FK_PatientNotificationsToStaff_PatientNotificationId">
+            <End Role="PatientNotifications" EntitySet="PatientNotifications" />
+            <End Role="PatientNotificationsToStaff" EntitySet="PatientNotificationsToStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientNotificationsToStaff_StaffId" Association="Self.FK_PatientNotificationsToStaff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PatientNotificationsToStaff" EntitySet="PatientNotificationsToStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientToDoctor_DoctorId" Association="Self.FK_PatientToDoctor_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="PatientToDoctor" EntitySet="PatientToDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientToDoctor_PatientId" Association="Self.FK_PatientToDoctor_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientToDoctor" EntitySet="PatientToDoctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pictures_HospitalId" Association="Self.FK_Pictures_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Pictures" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_DoctorId" Association="Self.FK_Prescriptions_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Prescriptions" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_HospitalId" Association="Self.FK_Prescriptions_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Prescriptions" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_PatientId" Association="Self.FK_Prescriptions_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Prescriptions" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_HospitalID" Association="Self.FK_Staff_HospitalID">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Videos_HospitalId" Association="Self.FK_Videos_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Videos" EntitySet="Videos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosandPictures_HospitalId" Association="Self.FK_VideosandPictures_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="VideosandPictures" EntitySet="VideosandPictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideosToPatients_VideoId" Association="Self.FK_VideosToPatients_VideoId">
+            <End Role="Videos" EntitySet="Videos" />
+            <End Role="VideosToPatients" EntitySet="VideosToPatients" />
+          </AssociationSet>
+          <AssociationSet Name="PK_MedicalRecordsToDoctors_DoctorId" Association="Self.PK_MedicalRecordsToDoctors_DoctorId">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="MedicalRecordsToDoctors" EntitySet="MedicalRecordsToDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="PK_VideosToPatients_PatientId" Association="Self.PK_VideosToPatients_PatientId">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="VideosToPatients" EntitySet="VideosToPatients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="HospitalId" Type="Int32" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="IsCancelled" Type="Boolean" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_Appointments_HospitalId" FromRole="Appointments" ToRole="Hospitals" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK_Appointments_DoctorId" FromRole="Appointment" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK_Appointments_PatientId" FromRole="Appointment" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="DisplayID">
+          <Key>
+            <PropertyRef Name="PropertyName" />
+          </Key>
+          <Property Name="PropertyName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PropertyValue" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DoctorNotification">
+          <Key>
+            <PropertyRef Name="DoctorNotificationId" />
+          </Key>
+          <Property Name="DoctorNotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Staffs" Relationship="CareModel.DoctorNotificationsToStaff" FromRole="DoctorNotification" ToRole="Staff" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK_DoctorNotifications_DoctorId" FromRole="DoctorNotification" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeedbackText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK_Feedback_DoctorId" FromRole="Feedback" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK_Feedback_PatientId" FromRole="Feedback" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospitalDisplayId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointments_HospitalId" FromRole="Hospitals" ToRole="Appointments" />
+          <NavigationProperty Name="MedicalRecords" Relationship="Self.FK_MedicalRecords_HospitalId" FromRole="Hospitals" ToRole="MedicalRecords" />
+          <NavigationProperty Name="Prescriptions" Relationship="Self.FK_Prescriptions_HospitalId" FromRole="Hospitals" ToRole="Prescriptions" />
+          <NavigationProperty Name="Videos" Relationship="Self.FK_Videos_HospitalId" FromRole="Hospitals" ToRole="Videos" />
+          <Property Name="ImageContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Pictures" Relationship="CareModel.FK_Pictures_HospitalId" FromRole="Hospital" ToRole="Picture" />
+          <NavigationProperty Name="Admins" Relationship="CareModel.FK_Admins_HospitalID" FromRole="Hospital" ToRole="Admin" />
+          <NavigationProperty Name="Staffs" Relationship="CareModel.FK_Staff_HospitalID" FromRole="Hospital" ToRole="Staff" />
+          <NavigationProperty Name="Doctors" Relationship="CareModel.HospitalToDoctor" FromRole="Hospital" ToRole="Doctor" />
+          <NavigationProperty Name="Patients" Relationship="CareModel.HospitalToPatient" FromRole="Hospital" ToRole="Patient" />
+          <NavigationProperty Name="VideosandPictures" Relationship="CareModel.FK_VideosandPictures_HospitalId" FromRole="Hospital" ToRole="VideosandPicture" />
+        </EntityType>
+        <EntityType Name="MedicalRecord">
+          <Key>
+            <PropertyRef Name="MedicalRecordId" />
+          </Key>
+          <Property Name="MedicalRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MedicalRecordImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="HospitalId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_MedicalRecords_HospitalId" FromRole="MedicalRecords" ToRole="Hospitals" />
+          <Property Name="DoctorID" Type="Int32" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK_MedicalRecords_DoctorsId" FromRole="MedicalRecord" ToRole="Doctor" />
+          <NavigationProperty Name="Doctors" Relationship="CareModel.MedicalRecordsToDoctors" FromRole="MedicalRecord" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK_MedicalRecords_PatientId" FromRole="MedicalRecord" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="PatientNotification">
+          <Key>
+            <PropertyRef Name="PatientNotificationId" />
+          </Key>
+          <Property Name="PatientNotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Staffs" Relationship="CareModel.PatientNotificationsToStaff" FromRole="PatientNotification" ToRole="Staff" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK_PatientNotifications_PatientId" FromRole="PatientNotification" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Prescription">
+          <Key>
+            <PropertyRef Name="PrescriptionId" />
+          </Key>
+          <Property Name="PrescriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrescriptionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrescriptionText" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PrescriptionImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="HospitalId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_Prescriptions_HospitalId" FromRole="Prescriptions" ToRole="Hospitals" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK_Prescriptions_DoctorId" FromRole="Prescription" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK_Prescriptions_PatientId" FromRole="Prescription" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="VideoLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HospitalId" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_Videos_HospitalId" FromRole="Videos" ToRole="Hospitals" />
+          <NavigationProperty Name="Patients" Relationship="CareModel.VideosToPatients" FromRole="Video" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK_Appointments_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="Appointments" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="MedicalRecords" Type="Self.MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="MedicalRecords">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="Prescriptions" Type="Self.Prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Prescriptions">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Videos_HospitalId">
+          <End Role="Hospitals" Type="Self.Hospital" Multiplicity="0..1" />
+          <End Role="Videos" Type="Self.Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Videos">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CareEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointments" EntityType="Self.Appointment" />
+          <EntitySet Name="DisplayIDs" EntityType="Self.DisplayID" />
+          <EntitySet Name="DoctorNotifications" EntityType="Self.DoctorNotification" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <EntitySet Name="Hospitals" EntityType="Self.Hospital" />
+          <EntitySet Name="MedicalRecords" EntityType="Self.MedicalRecord" />
+          <EntitySet Name="PatientNotifications" EntityType="Self.PatientNotification" />
+          <EntitySet Name="Prescriptions" EntityType="Self.Prescription" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Videos" EntityType="Self.Video" />
+          <AssociationSet Name="FK_Appointments_HospitalId" Association="Self.FK_Appointments_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_HospitalId" Association="Self.FK_MedicalRecords_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="MedicalRecords" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_HospitalId" Association="Self.FK_Prescriptions_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Prescriptions" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Videos_HospitalId" Association="Self.FK_Videos_HospitalId">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Videos" EntitySet="Videos" />
+          </AssociationSet>
+          <FunctionImport Name="GetDisplayID">
+            <Parameter Name="idtype" Mode="In" Type="String" />
+            <Parameter Name="displayId" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Pictures" EntityType="CareModel.Picture" />
+          <AssociationSet Name="FK_Pictures_HospitalId" Association="CareModel.FK_Pictures_HospitalId">
+            <End Role="Hospital" EntitySet="Hospitals" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+          <EntitySet Name="Admins" EntityType="CareModel.Admin" />
+          <AssociationSet Name="FK_Admins_HospitalID" Association="CareModel.FK_Admins_HospitalID">
+            <End Role="Hospital" EntitySet="Hospitals" />
+            <End Role="Admin" EntitySet="Admins" />
+          </AssociationSet>
+          <EntitySet Name="Staffs" EntityType="CareModel.Staff" />
+          <AssociationSet Name="FK_Staff_HospitalID" Association="CareModel.FK_Staff_HospitalID">
+            <End Role="Hospital" EntitySet="Hospitals" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorNotificationsToStaff" Association="CareModel.DoctorNotificationsToStaff">
+            <End Role="DoctorNotification" EntitySet="DoctorNotifications" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="PatientNotificationsToStaff" Association="CareModel.PatientNotificationsToStaff">
+            <End Role="PatientNotification" EntitySet="PatientNotifications" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <EntitySet Name="Doctors" EntityType="CareModel.Doctor" />
+          <AssociationSet Name="FK_Appointments_DoctorId" Association="CareModel.FK_Appointments_DoctorId">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorNotifications_DoctorId" Association="CareModel.FK_DoctorNotifications_DoctorId">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="DoctorNotification" EntitySet="DoctorNotifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_DoctorId" Association="CareModel.FK_Feedback_DoctorId">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_DoctorsId" Association="CareModel.FK_MedicalRecords_DoctorsId">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_DoctorId" Association="CareModel.FK_Prescriptions_DoctorId">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Prescription" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="HospitalToDoctor" Association="CareModel.HospitalToDoctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Hospital" EntitySet="Hospitals" />
+          </AssociationSet>
+          <AssociationSet Name="MedicalRecordsToDoctors" Association="CareModel.MedicalRecordsToDoctors">
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <EntitySet Name="Patients" EntityType="CareModel.Patient" />
+          <AssociationSet Name="FK_Appointments_PatientId" Association="CareModel.FK_Appointments_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_PatientId" Association="CareModel.FK_Feedback_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecords_PatientId" Association="CareModel.FK_MedicalRecords_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientNotifications_PatientId" Association="CareModel.FK_PatientNotifications_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="PatientNotification" EntitySet="PatientNotifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prescriptions_PatientId" Association="CareModel.FK_Prescriptions_PatientId">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Prescription" EntitySet="Prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="HospitalToPatient" Association="CareModel.HospitalToPatient">
+            <End Role="Hospital" EntitySet="Hospitals" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientToDoctor" Association="CareModel.PatientToDoctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="VideosToPatients" Association="CareModel.VideosToPatients">
+            <End Role="Video" EntitySet="Videos" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="CareModel.Country" />
+          <EntitySet Name="Districts" EntityType="CareModel.District" />
+          <EntitySet Name="States" EntityType="CareModel.State" />
+          <EntitySet Name="SubRegions" EntityType="CareModel.SubRegion" />
+          <AssociationSet Name="FK_dbo_States_dbo_Countries_CountryId" Association="CareModel.FK_dbo_States_dbo_Countries_CountryId">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Districts_dbo_States_StateId" Association="CareModel.FK_dbo_Districts_dbo_States_StateId">
+            <End Role="State" EntitySet="States" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SubRegions_dbo_Districts_DistrictId" Association="CareModel.FK_dbo_SubRegions_dbo_Districts_DistrictId">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="SubRegion" EntitySet="SubRegions" />
+          </AssociationSet>
+          <EntitySet Name="VideosandPictures" EntityType="CareModel.VideosandPicture" />
+          <AssociationSet Name="FK_VideosandPictures_HospitalId" Association="CareModel.FK_VideosandPictures_HospitalId">
+            <End Role="Hospital" EntitySet="Hospitals" />
+            <End Role="VideosandPicture" EntitySet="VideosandPictures" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="CareModel.sysdiagram" />
+          <EntitySet Name="AppointmentSlots" EntityType="CareModel.AppointmentSlot" />
+          <AssociationSet Name="FK__Appointme__Docto__762C88DA" Association="CareModel.FK__Appointme__Docto__762C88DA">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="AppointmentSlot" EntitySet="AppointmentSlots" />
+          </AssociationSet>
+          <EntitySet Name="DoctorAppointmentSchedules" EntityType="CareModel.DoctorAppointmentSchedule" />
+          <AssociationSet Name="FK__DoctorApp__Appoi__7DCDAAA2" Association="CareModel.FK__DoctorApp__Appoi__7DCDAAA2">
+            <End Role="AppointmentSlot" EntitySet="AppointmentSlots" />
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Docto__7CD98669" Association="CareModel.FK__DoctorApp__Docto__7CD98669">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedules" />
+          </AssociationSet>
+          <EntitySet Name="DoctorAppointments" EntityType="CareModel.DoctorAppointment" />
+          <AssociationSet Name="FK__DoctorApp__Patie__12C8C788" Association="CareModel.FK__DoctorApp__Patie__12C8C788">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="DoctorAppointment" EntitySet="DoctorAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoctorApp__Sched__13BCEBC1" Association="CareModel.FK__DoctorApp__Sched__13BCEBC1">
+            <End Role="DoctorAppointmentSchedule" EntitySet="DoctorAppointmentSchedules" />
+            <End Role="DoctorAppointment" EntitySet="DoctorAppointments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HospitalId" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="CareModel.FK_Pictures_HospitalId" FromRole="Picture" ToRole="Hospital" />
+        </EntityType>
+        <Association Name="FK_Pictures_HospitalId">
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="CareModel.Picture" Role="Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Picture">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminID" />
+          </Key>
+          <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospitalID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="201" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FailedLoginAttempts" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Hospital" Relationship="CareModel.FK_Admins_HospitalID" FromRole="Admin" ToRole="Hospital" />
+        </EntityType>
+        <Association Name="FK_Admins_HospitalID">
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="CareModel.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospitalID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="201" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FailedLoginAttempts" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="CareModel.FK_Staff_HospitalID" FromRole="Staff" ToRole="Hospital" />
+          <NavigationProperty Name="DoctorNotifications" Relationship="CareModel.DoctorNotificationsToStaff" FromRole="Staff" ToRole="DoctorNotification" />
+          <NavigationProperty Name="PatientNotifications" Relationship="CareModel.PatientNotificationsToStaff" FromRole="Staff" ToRole="PatientNotification" />
+        </EntityType>
+        <Association Name="FK_Staff_HospitalID">
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="CareModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorNotificationsToStaff">
+          <End Type="CareModel.DoctorNotification" Role="DoctorNotification" Multiplicity="*" />
+          <End Type="CareModel.Staff" Role="Staff" Multiplicity="*" />
+        </Association>
+        <Association Name="PatientNotificationsToStaff">
+          <End Type="CareModel.PatientNotification" Role="PatientNotification" Multiplicity="*" />
+          <End Type="CareModel.Staff" Role="Staff" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="205" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FailedLoginAttempts" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="HospitalId" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="CareModel.FK_Appointments_DoctorId" FromRole="Doctor" ToRole="Appointment" />
+          <NavigationProperty Name="DoctorNotifications" Relationship="CareModel.FK_DoctorNotifications_DoctorId" FromRole="Doctor" ToRole="DoctorNotification" />
+          <NavigationProperty Name="Feedbacks" Relationship="CareModel.FK_Feedback_DoctorId" FromRole="Doctor" ToRole="Feedback" />
+          <NavigationProperty Name="MedicalRecords" Relationship="CareModel.FK_MedicalRecords_DoctorsId" FromRole="Doctor" ToRole="MedicalRecord" />
+          <NavigationProperty Name="Prescriptions" Relationship="CareModel.FK_Prescriptions_DoctorId" FromRole="Doctor" ToRole="Prescription" />
+          <NavigationProperty Name="Hospitals" Relationship="CareModel.HospitalToDoctor" FromRole="Doctor" ToRole="Hospital" />
+          <NavigationProperty Name="MedicalRecords1" Relationship="CareModel.MedicalRecordsToDoctors" FromRole="Doctor" ToRole="MedicalRecord" />
+          <NavigationProperty Name="Patients" Relationship="CareModel.PatientToDoctor" FromRole="Doctor" ToRole="Patient" />
+          <Property Name="Intervels" Type="Int32" />
+          <NavigationProperty Name="AppointmentSlots" Relationship="CareModel.FK__Appointme__Docto__762C88DA" FromRole="Doctor" ToRole="AppointmentSlot" />
+          <NavigationProperty Name="DoctorAppointmentSchedules" Relationship="CareModel.FK__DoctorApp__Docto__7CD98669" FromRole="Doctor" ToRole="DoctorAppointmentSchedule" />
+        </EntityType>
+        <Association Name="FK_Appointments_DoctorId">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="CareModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorNotifications_DoctorId">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="CareModel.DoctorNotification" Role="DoctorNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="DoctorNotification">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_DoctorId">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="CareModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_DoctorsId">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="CareModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_DoctorId">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="CareModel.Prescription" Role="Prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Prescription">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HospitalToDoctor">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="*" />
+        </Association>
+        <Association Name="MedicalRecordsToDoctors">
+          <End Type="CareModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="201" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Profession" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="Age" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FailedLoginAttempts" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ImageContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="CareModel.FK_Appointments_PatientId" FromRole="Patient" ToRole="Appointment" />
+          <NavigationProperty Name="Feedbacks" Relationship="CareModel.FK_Feedback_PatientId" FromRole="Patient" ToRole="Feedback" />
+          <NavigationProperty Name="MedicalRecords" Relationship="CareModel.FK_MedicalRecords_PatientId" FromRole="Patient" ToRole="MedicalRecord" />
+          <NavigationProperty Name="PatientNotifications" Relationship="CareModel.FK_PatientNotifications_PatientId" FromRole="Patient" ToRole="PatientNotification" />
+          <NavigationProperty Name="Prescriptions" Relationship="CareModel.FK_Prescriptions_PatientId" FromRole="Patient" ToRole="Prescription" />
+          <NavigationProperty Name="Hospitals" Relationship="CareModel.HospitalToPatient" FromRole="Patient" ToRole="Hospital" />
+          <NavigationProperty Name="Doctors" Relationship="CareModel.PatientToDoctor" FromRole="Patient" ToRole="Doctor" />
+          <NavigationProperty Name="Videos" Relationship="CareModel.VideosToPatients" FromRole="Patient" ToRole="Video" />
+          <NavigationProperty Name="DoctorAppointments" Relationship="CareModel.FK__DoctorApp__Patie__12C8C788" FromRole="Patient" ToRole="DoctorAppointment" />
+        </EntityType>
+        <Association Name="FK_Appointments_PatientId">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="CareModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_PatientId">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="CareModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecords_PatientId">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="CareModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientNotifications_PatientId">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="CareModel.PatientNotification" Role="PatientNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="PatientNotification">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prescriptions_PatientId">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="CareModel.Prescription" Role="Prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="Prescription">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HospitalToPatient">
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="*" />
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="*" />
+        </Association>
+        <Association Name="PatientToDoctor">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="*" />
+        </Association>
+        <Association Name="VideosToPatients">
+          <End Type="CareModel.Video" Role="Video" Multiplicity="*" />
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="States" Relationship="CareModel.FK_dbo_States_dbo_Countries_CountryId" FromRole="Country" ToRole="State" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="State" Relationship="CareModel.FK_dbo_Districts_dbo_States_StateId" FromRole="District" ToRole="State" />
+          <NavigationProperty Name="SubRegions" Relationship="CareModel.FK_dbo_SubRegions_dbo_Districts_DistrictId" FromRole="District" ToRole="SubRegion" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="CareModel.FK_dbo_States_dbo_Countries_CountryId" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Districts" Relationship="CareModel.FK_dbo_Districts_dbo_States_StateId" FromRole="State" ToRole="District" />
+        </EntityType>
+        <EntityType Name="SubRegion">
+          <Key>
+            <PropertyRef Name="SubRegionId" />
+          </Key>
+          <Property Name="SubRegionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubRegionName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="CareModel.FK_dbo_SubRegions_dbo_Districts_DistrictId" FromRole="SubRegion" ToRole="District" />
+        </EntityType>
+        <Association Name="FK_dbo_States_dbo_Countries_CountryId">
+          <End Type="CareModel.Country" Role="Country" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CareModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Districts_dbo_States_StateId">
+          <End Type="CareModel.State" Role="State" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CareModel.District" Role="District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SubRegions_dbo_Districts_DistrictId">
+          <End Type="CareModel.District" Role="District" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CareModel.SubRegion" Role="SubRegion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="SubRegion">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VideosandPicture">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HospitalId" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="CareModel.FK_VideosandPictures_HospitalId" FromRole="VideosandPicture" ToRole="Hospital" />
+        </EntityType>
+        <Association Name="FK_VideosandPictures_HospitalId">
+          <End Type="CareModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="CareModel.VideosandPicture" Role="VideosandPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="VideosandPicture">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="AppointmentSlot">
+          <Key>
+            <PropertyRef Name="AppointmentSlotsID" />
+          </Key>
+          <Property Name="AppointmentSlotsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="SlotFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SlotTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK__Appointme__Docto__762C88DA" FromRole="AppointmentSlot" ToRole="Doctor" />
+          <Property Name="isdeleted" Type="Boolean" />
+          <NavigationProperty Name="DoctorAppointmentSchedules" Relationship="CareModel.FK__DoctorApp__Appoi__7DCDAAA2" FromRole="AppointmentSlot" ToRole="DoctorAppointmentSchedule" />
+          <Property Name="SlotFromDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SlotToDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Appointme__Docto__762C88DA">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="CareModel.AppointmentSlot" Role="AppointmentSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="AppointmentSlot">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DoctorAppointmentSchedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="AppointmentSlotID" Type="Int32" />
+          <Property Name="Timings_Slot" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="isdeleted" Type="Boolean" />
+          <NavigationProperty Name="AppointmentSlot" Relationship="CareModel.FK__DoctorApp__Appoi__7DCDAAA2" FromRole="DoctorAppointmentSchedule" ToRole="AppointmentSlot" />
+          <NavigationProperty Name="Doctor" Relationship="CareModel.FK__DoctorApp__Docto__7CD98669" FromRole="DoctorAppointmentSchedule" ToRole="Doctor" />
+          <NavigationProperty Name="DoctorAppointments" Relationship="CareModel.FK__DoctorApp__Sched__13BCEBC1" FromRole="DoctorAppointmentSchedule" ToRole="DoctorAppointment" />
+          <Property Name="SlotFromDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SlotToDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__DoctorApp__Appoi__7DCDAAA2">
+          <End Type="CareModel.AppointmentSlot" Role="AppointmentSlot" Multiplicity="0..1" />
+          <End Type="CareModel.DoctorAppointmentSchedule" Role="DoctorAppointmentSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentSlot">
+              <PropertyRef Name="AppointmentSlotsID" />
+            </Principal>
+            <Dependent Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="AppointmentSlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Docto__7CD98669">
+          <End Type="CareModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="CareModel.DoctorAppointmentSchedule" Role="DoctorAppointmentSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DoctorAppointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hospitald" Type="Int32" />
+          <Property Name="ScheduleId" Type="Int32" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="AppointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsSlotBooked" Type="Boolean" />
+          <NavigationProperty Name="Patient" Relationship="CareModel.FK__DoctorApp__Patie__12C8C788" FromRole="DoctorAppointment" ToRole="Patient" />
+          <NavigationProperty Name="DoctorAppointmentSchedule" Relationship="CareModel.FK__DoctorApp__Sched__13BCEBC1" FromRole="DoctorAppointment" ToRole="DoctorAppointmentSchedule" />
+        </EntityType>
+        <Association Name="FK__DoctorApp__Patie__12C8C788">
+          <End Type="CareModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="CareModel.DoctorAppointment" Role="DoctorAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientID" />
+            </Principal>
+            <Dependent Role="DoctorAppointment">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoctorApp__Sched__13BCEBC1">
+          <End Type="CareModel.DoctorAppointmentSchedule" Role="DoctorAppointmentSchedule" Multiplicity="0..1" />
+          <End Type="CareModel.DoctorAppointment" Role="DoctorAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorAppointmentSchedule">
+              <PropertyRef Name="ScheduleId" />
+            </Principal>
+            <Dependent Role="DoctorAppointment">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CareModelStoreContainer" CdmEntityContainer="CareEntities">
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="CareModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsCancelled" ColumnName="IsCancelled" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DisplayIDs">
+            <EntityTypeMapping TypeName="CareModel.DisplayID">
+              <MappingFragment StoreEntitySet="DisplayIDs">
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorNotifications">
+            <EntityTypeMapping TypeName="CareModel.DoctorNotification">
+              <MappingFragment StoreEntitySet="DoctorNotifications">
+                <ScalarProperty Name="DoctorNotificationId" ColumnName="DoctorNotificationId" />
+                <ScalarProperty Name="NotificationText" ColumnName="NotificationText" />
+                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="CareModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+                <ScalarProperty Name="FeedbackText" ColumnName="FeedbackText" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospitals">
+            <EntityTypeMapping TypeName="CareModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospitals">
+                <ScalarProperty Name="ImageContent" ColumnName="ImageContent" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="HospitalDisplayId" ColumnName="HospitalDisplayId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalRecords">
+            <EntityTypeMapping TypeName="CareModel.MedicalRecord">
+              <MappingFragment StoreEntitySet="MedicalRecords">
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="MedicalRecordName" ColumnName="MedicalRecordName" />
+                <ScalarProperty Name="MedicalRecordImage" ColumnName="MedicalRecordImage" />
+                <ScalarProperty Name="ImageExtension" ColumnName="ImageExtension" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientNotifications">
+            <EntityTypeMapping TypeName="CareModel.PatientNotification">
+              <MappingFragment StoreEntitySet="PatientNotifications">
+                <ScalarProperty Name="PatientNotificationId" ColumnName="PatientNotificationId" />
+                <ScalarProperty Name="NotificationText" ColumnName="NotificationText" />
+                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prescriptions">
+            <EntityTypeMapping TypeName="CareModel.Prescription">
+              <MappingFragment StoreEntitySet="Prescriptions">
+                <ScalarProperty Name="PrescriptionId" ColumnName="PrescriptionId" />
+                <ScalarProperty Name="PrescriptionName" ColumnName="PrescriptionName" />
+                <ScalarProperty Name="PrescriptionText" ColumnName="PrescriptionText" />
+                <ScalarProperty Name="PrescriptionImage" ColumnName="PrescriptionImage" />
+                <ScalarProperty Name="ImageExtension" ColumnName="ImageExtension" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CareModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="CareModel.Video">
+              <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDisplayID" FunctionName="CareModel.Store.GetDisplayID" />
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="CareModel.Picture">
+              <MappingFragment StoreEntitySet="Pictures">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PictureContent" ColumnName="PictureContent" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="CareModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="CareModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DoctorNotificationsToStaff" TypeName="CareModel.DoctorNotificationsToStaff" StoreEntitySet="DoctorNotificationsToStaff">
+            <EndProperty Name="Staff">
+              <ScalarProperty Name="StaffID" ColumnName="StaffId" />
+            </EndProperty>
+            <EndProperty Name="DoctorNotification">
+              <ScalarProperty Name="DoctorNotificationId" ColumnName="DoctorNotificationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientNotificationsToStaff" TypeName="CareModel.PatientNotificationsToStaff" StoreEntitySet="PatientNotificationsToStaff">
+            <EndProperty Name="Staff">
+              <ScalarProperty Name="StaffID" ColumnName="StaffId" />
+            </EndProperty>
+            <EndProperty Name="PatientNotification">
+              <ScalarProperty Name="PatientNotificationId" ColumnName="PatientNotificationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="CareModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="Intervels" ColumnName="Intervels" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="HospitalToDoctor" TypeName="CareModel.HospitalToDoctor" StoreEntitySet="HospitalToDoctor">
+            <EndProperty Name="Hospital">
+              <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+            </EndProperty>
+            <EndProperty Name="Doctor">
+              <ScalarProperty Name="DoctorID" ColumnName="DoctorId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MedicalRecordsToDoctors" TypeName="CareModel.MedicalRecordsToDoctors" StoreEntitySet="MedicalRecordsToDoctors">
+            <EndProperty Name="Doctor">
+              <ScalarProperty Name="DoctorID" ColumnName="DoctorId" />
+            </EndProperty>
+            <EndProperty Name="MedicalRecord">
+              <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="CareModel.Patient">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="ImageContent" ColumnName="ImageContent" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Profession" ColumnName="Profession" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="HospitalToPatient" TypeName="CareModel.HospitalToPatient" StoreEntitySet="HospitalToPatient">
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="PatientID" ColumnName="PatientId" />
+            </EndProperty>
+            <EndProperty Name="Hospital">
+              <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientToDoctor" TypeName="CareModel.PatientToDoctor" StoreEntitySet="PatientToDoctor">
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="PatientID" ColumnName="PatientId" />
+            </EndProperty>
+            <EndProperty Name="Doctor">
+              <ScalarProperty Name="DoctorID" ColumnName="DoctorId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="VideosToPatients" TypeName="CareModel.VideosToPatients" StoreEntitySet="VideosToPatients">
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="PatientID" ColumnName="PatientId" />
+            </EndProperty>
+            <EndProperty Name="Video">
+              <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="CareModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="CareModel.District">
+              <MappingFragment StoreEntitySet="Districts">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="CareModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubRegions">
+            <EntityTypeMapping TypeName="CareModel.SubRegion">
+              <MappingFragment StoreEntitySet="SubRegions">
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="SubRegionName" ColumnName="SubRegionName" />
+                <ScalarProperty Name="SubRegionId" ColumnName="SubRegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideosandPictures">
+            <EntityTypeMapping TypeName="CareModel.VideosandPicture">
+              <MappingFragment StoreEntitySet="VideosandPictures">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PictureContent" ColumnName="PictureContent" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CareModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppointmentSlots">
+            <EntityTypeMapping TypeName="CareModel.AppointmentSlot">
+              <MappingFragment StoreEntitySet="AppointmentSlots">
+                <ScalarProperty Name="SlotToDateTime" ColumnName="SlotToDateTime" />
+                <ScalarProperty Name="SlotFromDateTime" ColumnName="SlotFromDateTime" />
+                <ScalarProperty Name="isdeleted" ColumnName="isdeleted" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="SlotTo" ColumnName="SlotTo" />
+                <ScalarProperty Name="SlotFrom" ColumnName="SlotFrom" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="AppointmentSlotsID" ColumnName="AppointmentSlotsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorAppointmentSchedules">
+            <EntityTypeMapping TypeName="CareModel.DoctorAppointmentSchedule">
+              <MappingFragment StoreEntitySet="DoctorAppointmentSchedule">
+                <ScalarProperty Name="SlotToDateTime" ColumnName="SlotToDateTime" />
+                <ScalarProperty Name="SlotFromDateTime" ColumnName="SlotFromDateTime" />
+                <ScalarProperty Name="isdeleted" ColumnName="isdeleted" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="Timings_Slot" ColumnName="Timings_Slot" />
+                <ScalarProperty Name="AppointmentSlotID" ColumnName="AppointmentSlotID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorAppointments">
+            <EntityTypeMapping TypeName="CareModel.DoctorAppointment">
+              <MappingFragment StoreEntitySet="DoctorAppointments">
+                <ScalarProperty Name="IsSlotBooked" ColumnName="IsSlotBooked" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="Hospitald" ColumnName="Hospitald" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

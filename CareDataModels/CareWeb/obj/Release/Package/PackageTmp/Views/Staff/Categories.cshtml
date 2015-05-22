@@ -1,0 +1,25 @@
+﻿
+
+@{
+    ViewBag.Title = "Pictures & Videos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section leftMenu
+{
+    <div>
+        @Html.Partial("StaffMenuView")
+    </div>
+}
+<div id="navigationBar">
+    <a href="@Url.Action("DoctorsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+    Pictures & Videos
+</div>
+<div style="padding-left:30px">
+    <div class="smallgraytext_New">
+        Categories
+    </div>
+    <div id="CategoriesList"></div>
+   
+</div> 

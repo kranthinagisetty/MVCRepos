@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="QA-careApp" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Work\\HealthCareMay21\\CareDataModels\\CareWeb\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Work\\HealthCareMay21\\CareDataModels\\CareWeb\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="CareEntities-Web.config Connection String" description="" value="metadata=res://*/Models.Care.csdl|res://*/Models.Care.ssdl|res://*/Models.Care.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=Shuaib;initial catalog=Care;persist security info=True;user id=sa;password=titan#12;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\Work\\HealthCareMay21\\CareDataModels\\CareWeb\\obj\\Release\\Package\\PackageTmp\\Views\\Web\.config$" match="/configuration/connectionStrings/add[@name='CareEntities']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="D:\\Work\\HealthCareMay21\\CareDataModels\\CareWeb\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CareEntities']/@connectionString" />
+  </parameter>
+</parameters>

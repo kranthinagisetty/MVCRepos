@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CareDataModels.Models.MedicalRecord>
+
+@{
+    ViewBag.Title = "Medical Records";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("DoctorsListMenu")
+</div>
+<div id="contentpane">
+    <div class="currentpagetitlebox">
+        Medical Records:
+    </div>
+    <div id="prescriptionmenu" align="left" style="margin-top:50px;">
+        <div id="prescriptionlinksmenu" align="left">
+            @foreach (var item in Model)
+            {
+                <a href="@Url.Action("GetMedicalRecord", "Staff", new { id = item.MedicalRecordId })" title="@String.Copy(item.MedicalRecordName)" style="text-decoration:none; width: 100%; margin-bottom: 10px;" target="_blank">
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.DisplayFor(modelItem => item.MedicalRecordName)
+                </a><br />
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

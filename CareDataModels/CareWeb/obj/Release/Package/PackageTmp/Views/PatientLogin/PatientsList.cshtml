@@ -1,0 +1,25 @@
+﻿@model CareDataModels.Models.Patient
+
+@{
+    ViewBag.Title = "PatientsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    @Html.Partial("AdminMenu")
+</div>
+<div id="contentpane"> 
+@using (Html.BeginForm("PatientInfo", "PatientLogin"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true) 
+        <div class="patientcurrentpagetitlebox">
+            Search Patient
+            <div align="center" id="searchdiv">
+                @Html.TextBox("SearchBox")
+                <input class="textboxrowbutton" type="submit" value="SEARCH" >
+            </div>
+        </div>         
+    }
+</div>

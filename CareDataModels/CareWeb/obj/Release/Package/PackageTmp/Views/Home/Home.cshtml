@@ -1,0 +1,53 @@
+﻿@model CareWeb.Models.Login
+@{
+    ViewBag.Title = "Home"; 
+} 
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Health care app | Login</title>
+    <!-- jquery -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+
+    <link href="~/Styles/Style.css" rel="stylesheet" />     
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+
+</head>
+
+<body>
+    <div class="container">
+    <div class="wrapper login-container ">
+
+@using (Html.BeginForm(new { ReturnUrl = Request.QueryString["ReturnUrl"] }))
+{
+    @Html.AntiForgeryToken()
+           
+     <div class="logo"><a href="#"><img src="~/images/logo.png" width="141" height="43" alt="" /></a></div>
+            <div class="login-form">
+                <label>Select login type</label>
+                @*<label class="loginTxt">Select login type</label><br />*@
+                @Html.DropDownListFor(m => m.LoginSelectedType, Model.LoginType, new { @class = "mycombo" })
+                <label>Mobile number</label>
+                @Html.TextBoxFor(m => m.UserName, new { placeholder = "Mobile number", @class = "mycombo" })
+                @Html.ValidationMessageFor(m => m.UserName)
+                <label>Password</label>
+               @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "mycombo" })
+               @Html.ValidationMessageFor(m => m.Password)
+                <button>Login</button>
+
+                @Html.ValidationSummary(true)
+                <span class="red"><ul><li>@ViewBag.errorsData</li></ul> </span>
+
+            </div>
+            <div class="clr"></div>
+}
+
+        </div>
+    </div>
+</body>
+</html>
+

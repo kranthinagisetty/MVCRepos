@@ -1,0 +1,101 @@
+﻿@model CareDataModels.Models.Patient
+
+@{
+    ViewBag.Title = "Add Patient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("AdminMenu")
+</div>
+<div id="contentpane">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    <h2>Add Patient</h2>
+        <table>
+            <tr>
+                <td>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                </div>
+                    <div class="infofield">
+                        @Html.EditorFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                    </td><td>
+                             <div class="editor-label">
+                                 @Html.LabelFor(model => model.AddressLine1,"Address")
+                             </div>
+                             <div class="editor-field">
+                                 @Html.TextAreaFor(model => model.AddressLine1)
+                                 @Html.ValidationMessageFor(model => model.AddressLine1)
+                             </div>
+                </td></tr>
+            <tr><td>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="infofield">
+                        @Html.EditorFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div></td>@*<td>
+                                   <div class="editor-label">
+                                       @Html.LabelFor(model => model.AddressLine2)
+                                   </div>
+                                   <div class="editor-field">
+                                       @Html.EditorFor(model => model.AddressLine2)
+                                       @Html.ValidationMessageFor(model => model.AddressLine2)
+                                   </div>
+                </td>*@</tr>        
+                         <tr><td>
+                                 <div class="editor-label">
+                                     @Html.LabelFor(model => model.Phone,"Mobile")
+                                 </div>
+                                 <div class="editor-field">
+                                     @Html.EditorFor(model => model.Phone)
+                                     @Html.ValidationMessageFor(model => model.Phone)
+                                 </div>
+                </td><td><div class="editor-label">
+    @Html.LabelFor(model => model.State)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.State)
+    @Html.ValidationMessageFor(model => model.State)
+</div></td><td><div class="editor-label">
+    @Html.LabelFor(model => model.ZipCode)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.ZipCode)
+    @Html.ValidationMessageFor(model => model.ZipCode)
+</div></td></tr>
+            <tr><td> <div class="editor-label">
+    @Html.LabelFor(model => model.Email)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+</div>
+                </td><td><div class="editor-label">
+    @Html.LabelFor(model => model.Gender)
+</div>
+<div class="editor-field">    @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "true" }, new SelectListItem { Text = "Female", Value = "false" } })
+@Html.ValidationMessageFor(model => model.Gender)
+</div>
+                
+                </td><td>
+                         <div class="editor-label">
+                             @Html.LabelFor(model => model.Age)
+                         </div>
+                         <div class="editor-field">
+                             @Html.EditorFor(model => model.Age)
+                             @Html.ValidationMessageFor(model => model.Age)
+                         </div>
+                </td> </tr>           
+        </table>
+    <p>
+        <input class="editbutton" type="submit" value="SUBMIT" />
+    </p>
+    }
+                    </div>  

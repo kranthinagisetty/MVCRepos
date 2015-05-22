@@ -1,0 +1,17 @@
+﻿<div class="admin_section">
+    <h6 class="admin_name">
+        WELCOME
+        <span>
+            @ViewData["FullName"]
+        </span>
+    </h6>
+    <ul class="admin_menu">
+        @*<li> <a href="~/Staff/StaffHome" hidden="hidden" title="Home">HOME</a></li>*@
+        <li> <a href="~/Staff/DoctorsList" title="Doctors" class="current" >DOCTORS</a></li>
+        @*<li> <a href="~/Staff/CreateDoctor" hidden="hidden" style="color: #fff;" title="Add Doctor">ADD DOCTOR</a></li>*@
+        <li> <a href="~/Staff/PatientsList" title="Patients">PATIENTS</a></li>
+        <li> <a href="~/Staff/AppointmentsList" title="Appointments">APPOINTMENTS</a></li>
+        <li> <a href="~/Staff/VideosList" title="Videos">PICTURES & VIDEOS</a></li>
+        <li> <a href="~/Staff/StaffChangePassword" title="Settings">Settings</a></li>
+    </ul>
+</div>

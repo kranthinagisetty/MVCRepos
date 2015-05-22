@@ -1,0 +1,70 @@
+﻿@model  CareDataModels.DoctorInfo.DoctorInfo
+
+@{
+    ViewBag.Title = "Doctor Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}@section leftMenu
+{
+    <div>
+        @Html.Partial("StaffMenuView")
+    </div>
+}
+
+
+<div class="banner_section">
+    <img src="~/Images/banner_img1.jpg" alt="" />
+    <div class="page_direction">
+        <a href="@Url.Action("AppointmentsList", "Staff")" title="Home" style="text-decoration:none"> Home ></a>
+        <a href="@Url.Action("DoctorsList", "Staff")" title="Doctors" style="text-decoration:none">DoctorsList ></a>
+        Dr.@Html.DisplayFor(model => model.DoctorVM.FirstName)
+    </div>
+</div>
+
+<div class="content_wrapper fancy_fields">
+    <div class="row doctor_details_con">
+        <div class="col col_left">
+            <h2>Dr.@Html.DisplayFor(model => model.DoctorVM.FirstName)</h2>
+            <ul>
+                <li class="txt_blue">@Html.DisplayFor(model => model.DoctorVM.Specialization)</li>
+                <li>@Html.LabelFor(model => model.DoctorVM.Phone, "Mobile"): @Html.DisplayFor(model => model.DoctorVM.Phone)</li>
+                <li>@Html.DisplayNameFor(model => model.DoctorVM.Email):@Html.DisplayFor(model => model.DoctorVM.Email)</li>
+                <li>@Html.LabelFor(model => model.DoctorVM.LastName, "Last Name"):@Html.DisplayFor(model => model.DoctorVM.LastName)</li>
+                <li>@Html.LabelFor(model => model.DoctorVM.Gender):@Html.DisplayFor(model => model.DoctorVM.Gender, new List<SelectListItem>() { new SelectListItem { Text = "Male", Value = "Male" }, new SelectListItem { Text = "Female", Value = "Female" } })</li>
+                <li>Country:@Html.Label("India")</li>
+                <li>@Html.DisplayNameFor(model => model.DoctorVM.State):@Html.DisplayFor(model => model.DoctorVM.State)</li>
+                <li>@Html.DisplayNameFor(model => model.DoctorVM.City):@Html.DisplayFor(model => model.DoctorVM.City)</li>
+                <li>@Html.LabelFor(model => model.DoctorVM.ZipCode, "Zip Code"): @Html.DisplayFor(model => model.DoctorVM.ZipCode)</li>
+            </ul>
+            <hr>
+            <h3>@Html.LabelFor(model => model.DoctorVM.AddressLine1, "Address"):</h3>
+            <p>
+                @Html.DisplayFor(model => model.DoctorVM.AddressLine1)
+            </p>
+        </div>
+        <div class="col col_right">
+            <h3>@Html.LabelFor(model => model.DoctorVM.Intervels, "Consulting Duration"):</h3>
+            <ul>
+                <li>@Html.DisplayFor(model => model.DoctorVM.Intervels) &nbsp; min</li>
+            </ul>
+            <hr>
+            <h3>Slot timings:</h3>
+            <ul class="slot_timmings_list">
+                @foreach (var item in Model.AppointmentSlotVM)
+                {
+                    <li>
+                        <span class="span_left">@Html.DisplayFor(modelItem => item.SlotFrom)</span>
+                        to
+                        <span class="span_right">@Html.DisplayFor(modelItem => item.SlotTo)</span>
+                    </li>
+
+                }
+            </ul>
+
+        </div>
+    </div>
+    <div class="row">
+        <input type="button" value="Edit" onclick="location.href='@Url.Action("EditDoctor", "Staff", new { id = Model.DoctorVM.DoctorID })'" />
+    </div>
+
+
+</div>

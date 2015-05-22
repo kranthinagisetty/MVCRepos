@@ -1,0 +1,8 @@
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\bin\Release\CareDataModels.dll.config
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\bin\Release\CareDataModels.dll
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\bin\Release\CareDataModels.pdb
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\bin\Release\EntityFramework.dll
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\bin\Release\EntityFramework.xml
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\obj\Release\CareDataModels.csprojResolveAssemblyReference.cache
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\obj\Release\CareDataModels.dll
+D:\Work\HealthCareMay21\CareDataModels\CareDataModels\obj\Release\CareDataModels.pdb

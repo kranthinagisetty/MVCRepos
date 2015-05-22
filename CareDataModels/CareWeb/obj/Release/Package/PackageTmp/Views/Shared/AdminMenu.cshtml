@@ -1,0 +1,63 @@
+﻿
+<div class="admin_section">
+    <h6 class="admin_name">
+        WELCOME
+        <span>
+            @ViewData["FullName"]
+        </span>
+    </h6>
+    <ul class="admin_menu">
+
+        <li><a id="APPOINTMENTS" href="@Url.Action("AppointmentsList", "Admin", new { MenuClassID = "APPOINTMENTS" })" title="Admins">APPOINTMENTS</a></li>
+        <li><a id="PATIENT" href="@Url.Action("PatientsList", "Admin", new { MenuClassID = "PATIENT" })" title="Admins">PATIENT</a></li>
+        <li><a id="DOCTOR" href="@Url.Action("DoctorsList", "Admin", new { MenuClassID = "DOCTOR" })" title="Admins">DOCTOR</a></li>
+        <li><a id="STAFF" href="@Url.Action("StaffList", "Admin", new { MenuClassID = "STAFF" })" title="Admins">STAFF</a></li> 
+        <li><a id="PICTURES" href="@Url.Action("VideosList", "Admin", new { MenuClassID = "PICTURES" })" title="Videos">PICTURES & VIDEOS</a></li>
+        <li><a id="Settings" href="@Url.Action("AdminChangePassword", "Admin", new { MenuClassID = "Settings"})" title="Admins" >Settings</a></li>
+
+       
+
+        @*<li> <a href="@Url.Action("addPatient", "Admin")" title="AddPatient">ADD PATIENT</a></li>
+            <li> <a href="@Url.Action("PatientsList", "PatientLogin")" title="PATIENT RECORDS">PATIENT RECORDS</a></li>
+            <li> <a href="@Url.Action("CreateDoctor", "Doctor")" title="Admins">ADD DOCTOR</a></li>
+            <li> <a href="@Url.Action("CreateStaff", "Admin")" title="Add Staff">ADD STAFF</a></li>
+            <li> <a href="" title="Admins">PICTURES & VIDEOS</a></li>
+            <li> <a href="@Url.Action("changepassword", "Admin")"  title="Admins">SETTINGS</a></li>
+            <li> <a href="~/Admin/AdminHome" hidden="hidden" title="Home">HOME</a></li>
+            <li> <a href="~/Admin/StaffList" hidden="hidden" title="Staff">STAFF</a></li>
+            <li> <a href="~/Admin/CreateStaff" title="Add Staff">ADD STAFF</a></li>
+            <li> <a href="~/Admin/AdminHome" hidden="hidden" title="Home">HOME</a></li>
+            <li> <a href="~/Admin/CreateStaff" hidden="hidden" title="Add Staff">ADD STAFF</a></li>*@
+      
+
+    </ul>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var sURL = window.document.URL.toString();
+      
+        if (sURL.indexOf("?") > 0) {
+
+            var arrParams = sURL.split("?");
+            var arrParams1 = sURL.split("=");
+           
+            $('#' + arrParams1[1]).addClass('current');
+
+        }
+        else {
+            $('#APPOINTMENTS').addClass('current');
+             }
+        });       
+   
+
+</script>
+
+
+
+
+
+

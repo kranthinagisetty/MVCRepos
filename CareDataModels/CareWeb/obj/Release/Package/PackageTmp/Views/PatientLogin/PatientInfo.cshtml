@@ -1,0 +1,45 @@
+﻿@model CareDataModels.Models.Patient
+
+@{
+    ViewBag.Title = "PatientInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.Partial("AdminMenu")
+</div>
+<div id="contentpane"> 
+        <div id="patirntInfouploadRecordDiv" style="float:right;padding-bottom:10px;padding-right:215px">
+            <input class="editbutton" type="submit" value="Upload Records" />
+        </div>
+        <table style="width:80%;background-color:white" align="left">
+            <tr>
+                <td style="width:80%;vertical-align:top">
+                    @Html.LabelFor(model => model.FirstName, "Name :")
+                    @Html.DisplayFor(model => model.FullName) <br />
+                    @Html.LabelFor(model => model.Phone, "Phone :")
+                    @Html.DisplayFor(model => model.Phone) <br />
+                    @Html.LabelFor(model => model.Phone, "Address :")@Html.DisplayFor(model => model.AddressLine1)
+                </td>
+                <td>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageContent)" height="150px" />
+                </td>
+            </tr>
+        </table> <br />
+
+    <table style="width:80%" align="left">
+        <tr><td style="font-size:larger">Patient Records</td></tr>
+        <tr>
+            <td style="width:80%;vertical-align:top"> </td> 
+        </tr>
+    </table> 
+
+    <table style="width:80%;background-color:white" align="left"> 
+        <tr>
+            <td style="width:80%;vertical-align:top"></td>
+            <td>
+                 @*<img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageContent)" height="150px" />*@
+            </td>
+        </tr>
+    </table> 
+    </div>
